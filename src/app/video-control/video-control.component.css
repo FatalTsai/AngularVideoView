@@ -1,0 +1,33 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+.scrubber mat-slider{
+    width: 600px;
+
+}
+
+.controls{
+    display: flex;
+
+}
+
+.controls mat-slider{
+    width: 4px;
+
+}
+
+.controls .space{
+    width: 40px;
+}
+
+.content {
+    padding: 30px;
+    color: #787878;
+    background-color: #fcf7f8;
+    border: 1px solid rgba(0,0,0,.05);
+  }
+
+
+  .controls kendo-popup{
+   top:  -265px !important;
+  }

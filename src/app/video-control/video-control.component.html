@@ -1,0 +1,98 @@
+<div class="scrubber">
+
+    <span class="elapsed-time">{{elapsed| date:'mm:ss'}}</span>
+
+    <!---         <scrubber value="{{currentTime}}" max="{{maxTime}}"></scrubber>   -->
+    <mat-slider #timebar (change)="timeupdate($event)" step="1" min="0" max="100" value="0"></mat-slider>
+
+    <span class="total-time">{{duration | date:'mm:ss'}}</span>
+
+    
+</div>
+
+
+<div class="controls">
+
+    <div class="zoom-control">
+       
+        <button mat-button (click)=zoomout()>
+            <mat-icon svgIcon="zoom-out"></mat-icon>
+        </button>
+    
+        <mat-slider #zoombar (change)="zoomupdate()" step="1" min="0" max="100" [(ngModel)]="zoombarvalue"></mat-slider>
+    
+        <button mat-button (click)=zoomin()>
+            <mat-icon svgIcon="zoom-in"></mat-icon>
+        </button>
+    </div>
+        
+    <div class="space"></div>
+
+    <kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
+
+            <h4>ADJUST_COLOUR_BRIGHTNESS</h4>
+            <mat-slider></mat-slider>
+            <h4>ADJUST_COLOUR_CONTRAST</h4>
+            <mat-slider></mat-slider>
+    
+            <h4>ADJUST_COLOUR_SATURATION</h4>
+            <mat-slider></mat-slider>
+            
+        </kendo-popup>
+    <div class="example-config">
+            <button #anchor (click)="onToggle()" class="k-button">
+                <mat-icon svgIcon="equalizer"></mat-icon>
+            </button>
+    </div>
+    
+    
+ 
+
+
+    <button mat-button >
+            <mat-icon svgIcon="player-first"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="player-previous"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="player-stop"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="player-play" ></mat-icon>
+    </button>
+
+    <!--- appear when playing--->    
+    <button mat-button  *ngIf="0">
+            <mat-icon svgIcon="player-pause"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="player-next"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="player-last"></mat-icon>
+    </button>
+    <button mat-button >
+            <mat-icon svgIcon="fullscreen"></mat-icon>
+    </button>    
+
+    <div class="space"></div>
+
+    <div class="volume-control">
+       
+        <button mat-button (click)=volumelow()>
+                <mat-icon svgIcon="volume-low"></mat-icon>
+        
+        </button>
+    
+        <mat-slider #timebar (change)="voiceupdate($event)" step="1" min="0" max="100" [(ngModel)]="volumebarvalue"></mat-slider>
+    
+        <button mat-button >
+            <mat-icon svgIcon="volume-high"  (click)=volumehigh()></mat-icon>
+        </button>
+            <!--<div style="width: 105px;"></div>-->
+    </div>
+    
+   
+
+</div>
