@@ -525,6 +525,7 @@
 
 </div>
 
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -533,4 +534,8 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<router-outlet></router-outlet>
+<div class="spacer" *ngIf="0"></div>
+<app-video-container *ngIf=1></app-video-container>
+<app-video-control *ngIf=1></app-video-control>
+
+<router-outlet *ngIf ="1"></router-outlet>

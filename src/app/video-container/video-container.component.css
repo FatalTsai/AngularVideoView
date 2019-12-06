@@ -1,0 +1,9 @@
+video::-webkit-media-controls {
+    display: none;
+    
+  }
+
+  video {
+    filter: blur(0px); 
+    filter: saturate(-30%);  
+  }

@@ -26,6 +26,17 @@ timeupdate(event) {
 
 zoombarvalue :number = 0;
 
+isplaying : boolean =true;
+play(value)
+{
+  console.log("isplaying = "+this.isplaying)
+  if(value){
+    this.isplaying = true;
+  }
+  else{
+    this.isplaying = false
+  }
+}
 zoomout(){
 
   if(this.zoombarvalue >0)

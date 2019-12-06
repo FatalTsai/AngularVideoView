@@ -27,16 +27,16 @@
     </div>
         
     <div class="space"></div>
-
+    <!-- https://www.telerik.com/kendo-angular-ui/components/popup/ -->
     <kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
 
-            <h4>ADJUST_COLOUR_BRIGHTNESS</h4>
-            <mat-slider></mat-slider>
-            <h4>ADJUST_COLOUR_CONTRAST</h4>
-            <mat-slider></mat-slider>
-    
-            <h4>ADJUST_COLOUR_SATURATION</h4>
-            <mat-slider></mat-slider>
+        <span>brightness</span>
+        <mat-slider></mat-slider>
+        <span>contrast</span>
+        <mat-slider></mat-slider>
+
+        <span>saturation</span>
+        <mat-slider></mat-slider>
             
         </kendo-popup>
     <div class="example-config">
@@ -58,12 +58,12 @@
     <button mat-button >
             <mat-icon svgIcon="player-stop"></mat-icon>
     </button>
-    <button mat-button >
-            <mat-icon svgIcon="player-play" ></mat-icon>
+    <button mat-button (click) ="play(true)" *ngIf="!isplaying">
+            <mat-icon svgIcon="player-play"  ></mat-icon>
     </button>
 
     <!--- appear when playing--->    
-    <button mat-button  *ngIf="0">
+    <button mat-button  (click) ="play(false)" *ngIf="isplaying">
             <mat-icon svgIcon="player-pause"></mat-icon>
     </button>
     <button mat-button >
