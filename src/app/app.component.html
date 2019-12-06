@@ -535,7 +535,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <div class="spacer" *ngIf="0"></div>
-<app-video-container *ngIf=1></app-video-container>
-<app-video-control *ngIf=1></app-video-control>
+<app-video-container *ngIf="router.url === '/' "></app-video-container>
+<app-video-control *ngIf="router.url === '/' "></app-video-control>
 
 <router-outlet *ngIf ="1"></router-outlet>

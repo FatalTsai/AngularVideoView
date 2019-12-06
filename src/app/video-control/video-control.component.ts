@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-video-control',
   templateUrl: './video-control.component.html',
@@ -67,7 +68,7 @@ volumehigh(){
 
 
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {
     iconRegistry.addSvgIcon(
       'equalizer',
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/equalizer.svg'));

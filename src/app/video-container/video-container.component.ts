@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-video-container',
@@ -23,15 +24,12 @@ export class VideoContainerComponent implements OnInit {
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
     }
  
-  constructor() { }
+  constructor(private route :ActivatedRoute) { }
 
-
+  name
   ngOnInit() {
-  
-
-
-
-
+    this.name = this.route.snapshot.paramMap; // <-- 從route的snapshot取得Router Parameter:name
+    console.log("this.name = "+this.name)
   }
 
 }

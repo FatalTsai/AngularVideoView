@@ -8,7 +8,8 @@ import { VideoContainerComponent } from './video-container/video-container.compo
 
 
 
-const routes: Routes = [  
+const routes: Routes = [
+  //{path: '', redirectTo: 'video-control', pathMatch: 'full'},  
   {path: 'video-control', component: VideoControlComponent},
   {path: 'video-container',component :VideoContainerComponent}
 ];

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,15 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'viewer';
-  constructor( public router: Router) 
+  constructor(  public router: Router , public route : ActivatedRoute) 
   {}
+
+  name : String
+  ngOnInit() {
+    //this.name = this.route.snapshot.paramMap.get('name'); // <-- 從route的snapshot取得Router Parameter:name
+    //console.log("this.name = "+this.name)
+    console.log("router.url = "+ this.router.url)
+  }
+
   
 }
