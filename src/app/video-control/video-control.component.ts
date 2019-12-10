@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output } from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./video-control.component.css']
 })
 export class VideoControlComponent implements OnInit {
+  @Output() test : String ="test test"
   timebar: number = 0;
-
+  playstat
   timebar_value_label = new Date(1970,0,1).setSeconds(this.timebar);
 
   elapsed= new Date(1970, 0, 1).setSeconds(this.timebar);
@@ -31,12 +32,20 @@ isplaying : boolean =true;
 play(value)
 {
   console.log("isplaying = "+this.isplaying)
+
+  this.playstat = JSON.parse(localStorage["playstat"])
+ 
   if(value){
     this.isplaying = true;
+    this.playstat["isplaying"] = true
   }
   else{
     this.isplaying = false
+    this.playstat["isplaying"] = false
+
   }
+  localStorage["playstat"] = JSON.stringify(this.playstat)
+
 }
 zoomout(){
 
@@ -65,6 +74,8 @@ volumehigh(){
     this.volumebarvalue += 5;
   console.log("volumehigh")
 }
+
+
 
 
 
@@ -133,5 +144,7 @@ volumehigh(){
   ngOnInit() {
     
   }
+
+  
 
 }

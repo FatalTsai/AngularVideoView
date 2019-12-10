@@ -3,11 +3,10 @@
 <!---https://www.w3schools.com/cssref/css3_pr_filter.asp-->
 <!--https://codepen.io/fatal_tsai/pen/WNbvGQv  add contrast-->
 <button mat-button (click)="forward($event)">Click me!</button>
+<span>{{inputTest}}</span>
 
-
-<video id="player" height="288" width="512" controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
-    <source src="star.mp4" type="video/mp4">
-    <source src="assets/Native.mp4" type="video/mp4">
-    
+<video  controls #player  height="288" width="512" controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
+  <source src="assets/Native.mp4" type="video/mp4">  
+  <source src="star.mp4" type="video/mp4">   
   Your browser does not support the video tag.
 </video>
