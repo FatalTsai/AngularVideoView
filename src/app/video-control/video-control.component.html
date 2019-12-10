@@ -58,12 +58,12 @@
     <button mat-button >
             <mat-icon svgIcon="player-stop"></mat-icon>
     </button>
-    <button #play mat-button (click) ="play(true)" *ngIf="!isplaying">
+    <button play mat-button (click) ="play(true)" *ngIf="isplaying">
             <mat-icon svgIcon="player-play"  ></mat-icon>
     </button>
 
     <!--- appear when playing--->    
-    <button mat-button  (click) ="play(false)" *ngIf="isplaying">
+    <button mat-button  (click) ="play(false)" *ngIf="!isplaying">
             <mat-icon svgIcon="player-pause"></mat-icon>
     </button>
     <button mat-button >

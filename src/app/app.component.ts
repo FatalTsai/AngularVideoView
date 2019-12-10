@@ -14,8 +14,8 @@ export class AppComponent {
     "isplaying":true
   }
   test = "test la"   
-  
-
+  isplaying = false
+ 
 
   title = 'viewer';
   constructor(  public router: Router , public route : ActivatedRoute) {}

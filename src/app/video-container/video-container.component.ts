@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-video-container',
@@ -7,37 +8,49 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./video-container.component.css']
 })
 export class VideoContainerComponent implements OnInit {
-  @Input() test : string
+  @Input() isplaying : boolean
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
-  @ViewChild('play',{static :true}) play :ElementRef
-  
+  //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
+  //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
 
   forward()
   {
     //this.player.nativeElement.currentTime+=120
-    this.player.nativeElement.pause();
+    this.player.nativeElement.play();
     console.log("click!!")
   }
-
   public onTimeUpdate(value){
     //console.log(value.target.currentTime);
     //this.video_player = value.target
-    
-    console.log(this.test)
    
-
     //value.target.currentTime =1000;
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
+
+    console.log("this.isplaying = "+this.isplaying)
+
     }
  
 
   name
   ngOnInit() {
-    console.log(this.test)
     //this.name = this.route.snapshot.paramMap; // <-- 從route的snapshot取得Router Parameter:name
     //console.log("this.name = "+this.name)
   }
 
+  ngOnChanges(changes :SimpleChanges) {
+    console.dir(changes['isplaying']);
+
+    if(this.isplaying)
+    {
+      this.player.nativeElement.play();
+    }
+    else
+    {
+      this.player.nativeElement.pause();
+    }
+
+
+}
 
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter } from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./video-control.component.css']
 })
 export class VideoControlComponent implements OnInit {
-  @Output() test : String ="test test"
+  @Input() isplaying : boolean =true;
+  @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
   timebar: number = 0;
   playstat
   timebar_value_label = new Date(1970,0,1).setSeconds(this.timebar);
@@ -27,8 +28,6 @@ timeupdate(event) {
 }
 
 zoombarvalue :number = 0;
-
-isplaying : boolean =true;
 play(value)
 {
   console.log("isplaying = "+this.isplaying)
@@ -36,13 +35,14 @@ play(value)
   this.playstat = JSON.parse(localStorage["playstat"])
  
   if(value){
-    this.isplaying = true;
-    this.playstat["isplaying"] = true
+    this.isplaying = false;
+    this.playstat["isplaying"] = false
+    this.change.emit(this.isplaying)
   }
   else{
-    this.isplaying = false
-    this.playstat["isplaying"] = false
-
+    this.isplaying = true
+    this.playstat["isplaying"] = true
+    this.change.emit(this.isplaying)
   }
   localStorage["playstat"] = JSON.stringify(this.playstat)
 
