@@ -12,13 +12,16 @@ export class AppComponent {
   playstat  = {
     "isplaying":true,
     "currentTime":0,
-    "duration":0
+    "duration":0,
+    "LabelcurrentTime": 0
+
   }
   test = "test la"   
   playstatModified = true
  
 
-  title = 'viewer';
+
+
   constructor(  public router: Router , public route : ActivatedRoute) {}
 
   name : String

@@ -13,6 +13,7 @@ export class VideoContainerComponent implements OnInit {
   @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
 
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
+
   //
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
@@ -21,6 +22,7 @@ export class VideoContainerComponent implements OnInit {
     console.log(value.target.currentTime);
     this.playstatModified = !this.playstatModified;
     this.playstat["currentTime"] = value.target.currentTime
+    this.playstat["LabelcurrentTime"] = new Date(1970, 0, 1).setSeconds(value.target.currentTime)
     this.playstatUpadte.emit(this.playstat)
     this.change.emit(this.playstatModified)
     //console.log(this.timebar.nativeElement.max)

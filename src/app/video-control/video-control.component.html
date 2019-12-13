@@ -1,11 +1,12 @@
 <div class="scrubber">
 
-    <span class="elapsed-time">{{currentTime| date:'mm:ss'}}</span>
+    <span class="elapsed-time">{{this.playstat["LabelcurrentTime"]| date:'mm:ss'}}</span>
 
     <!---         <scrubber value="{{currentTime}}" max="{{maxTime}}"></scrubber>   -->
-    <mat-slider #timebar (change)="currentTimeUpdate($event)" step="1" min="0" max="duration" value="0"></mat-slider>
+    <mat-slider #timebar (change)="currentTimeUpdate($event)" step="0.1" 
+    min="0" max="this.playstat['duration']" [value]="this.playstat['currentTime']"></mat-slider>
 
-    <span class="total-time">{{duration | date:'mm:ss'}}</span>
+    <span class="total-time">{{this.playstat['duration']}}</span>
 
     
 </div>

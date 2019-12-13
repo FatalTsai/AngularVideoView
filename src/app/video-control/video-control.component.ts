@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -12,14 +12,18 @@ export class VideoControlComponent implements OnInit {
   @Input() playstat : object
   @Output() change: EventEmitter<any> = new EventEmitter<any>()
   @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
-  @ViewChild('timebar',{static : true}) timebar : ElementRef
-  
+  @ViewChild('timebar',{static : true}) timebar : any
   currentTime= new Date(1970, 0, 1).setSeconds(0);
   duration = new Date(1970, 0, 1).setSeconds(0);
-
   //currentTime= new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
   //duration = new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
   //ref :https://stackblitz.com/edit/angular-display-mat-slider-value?file=app%2Fslider-overview-example.ts
+
+  
+  LabelcurrentTime = function () {
+    return new Date(1970,0,0).setSeconds(this.playstat['currentTime'])
+  }
+
 
 currentTimeUpdate(event) {
   this.currentTime= new Date(1970,0,1).setSeconds(event.value)
@@ -32,7 +36,6 @@ currentTimeUpdate(event) {
 
 
 
-  
 play(value)
 {
   this.playstatModified = !this.playstatModified;
@@ -81,10 +84,18 @@ public onToggle(): void {
 
 
 
-ngOnInit() {
-  console.log("playstat = " + JSON.stringify(this.playstat))
-  console.log("timebar = "+JSON.stringify(this.timebar) )
-}
+  ngOnInit() {
+    console.log("playstat = " + JSON.stringify(this.playstat))
+    //console.log("timebar = "+(this.timebar.max))
+  }
+
+  ngOnChanges(changes :SimpleChanges) {
+    console.log("from control")
+    this.timebar.value = this.playstat["currentTime"]
+  }
+
+
+
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {
     iconRegistry.addSvgIcon(
