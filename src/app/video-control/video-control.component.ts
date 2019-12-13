@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter, 
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import {VideoLength } from 'video-length'
+
+
 @Component({
   selector: 'app-video-control',
   templateUrl: './video-control.component.html',
@@ -20,9 +23,7 @@ export class VideoControlComponent implements OnInit {
   //ref :https://stackblitz.com/edit/angular-display-mat-slider-value?file=app%2Fslider-overview-example.ts
 
   
-  LabelcurrentTime = function () {
-    return new Date(1970,0,0).setSeconds(this.playstat['currentTime'])
-  }
+  
 
 
 currentTimeUpdate(event) {
@@ -74,6 +75,18 @@ volumehigh(){
   console.log("volumehigh")
 }
 
+fullscreen()
+{
+  this.playstatModified = !this.playstatModified;
+  this.change.emit(this.playstatModified)
+
+  this.playstatUpadte.emit(this.playstat)
+  this.playstat["isfullscreen"] = true
+}
+
+
+
+
 private toggleText: string = "Hide";
 private show: boolean = true;
 
@@ -86,7 +99,9 @@ public onToggle(): void {
 
   ngOnInit() {
     console.log("playstat = " + JSON.stringify(this.playstat))
-    //console.log("timebar = "+(this.timebar.max))
+    //console.log("timebar = "+(this.timebar.max)
+
+
   }
 
   ngOnChanges(changes :SimpleChanges) {

@@ -13,8 +13,9 @@ export class AppComponent {
     "isplaying":true,
     "currentTime":0,
     "duration":0,
-    "LabelcurrentTime": 0
-
+    "LabelcurrentTime": 0,
+    "Labelduration":0,
+    "isfullscreen":false
   }
   test = "test la"   
   playstatModified = true
