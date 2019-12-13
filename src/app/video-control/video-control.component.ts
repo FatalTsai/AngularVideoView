@@ -8,38 +8,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./video-control.component.css']
 })
 export class VideoControlComponent implements OnInit {
-  @Input() isplaying : boolean =true;
+  @Input() playstatModified : boolean =true;
   @Input() playstat : object
   @Output() change: EventEmitter<any> = new EventEmitter<any>()
   @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
+  @ViewChild('timebar',{static : true}) timebar : ElementRef
+  
+  currentTime= new Date(1970, 0, 1).setSeconds(0);
+  duration = new Date(1970, 0, 1).setSeconds(0);
 
-  timebar: number = 0;
-  timebar_value_label = new Date(1970,0,1).setSeconds(this.timebar);
+  //currentTime= new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
+  //duration = new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
+  //ref :https://stackblitz.com/edit/angular-display-mat-slider-value?file=app%2Fslider-overview-example.ts
 
-  elapsed= new Date(1970, 0, 1).setSeconds(this.timebar);
-  duration = new Date(1970, 0, 1).setSeconds(100);
-  //elapsed :from started time ;  duration : how long the video last
- 
-
-//ref :https://stackblitz.com/edit/angular-display-mat-slider-value?file=app%2Fslider-overview-example.ts
-
-timeupdate(event) {
-  this.timebar = event.value;
-  this.elapsed =new Date(1970,1,0).setSeconds(this.timebar)
-  console.log(event.value)
+currentTimeUpdate(event) {
+  this.currentTime= new Date(1970,0,1).setSeconds(event.value)
+  this.playstatModified = !this.playstatModified;
+  this.playstat["currentTime"] = event.value
+  this.playstatUpadte.emit(this.playstat)
+  this.change.emit(this.playstatModified)
 }
 
-zoombarvalue :number = 0;
+
+
+
+  
 play(value)
 {
-  //console.log("isplaying = "+this.isplaying) 
-
-  this.isplaying = value;
+  this.playstatModified = !this.playstatModified;
   this.playstat["isplaying"] = value
   this.playstatUpadte.emit(this.playstat)
-  this.change.emit(this.isplaying)
+  this.change.emit(this.playstatModified)
   
 }
+zoombarvalue :number = 0;
+
 zoomout(){
 
   if(this.zoombarvalue >0)
@@ -68,9 +71,20 @@ volumehigh(){
   console.log("volumehigh")
 }
 
+private toggleText: string = "Hide";
+private show: boolean = true;
+
+public onToggle(): void {
+    this.show = !this.show;
+    this.toggleText = this.show ? "Hidе" : "Show";
+}
 
 
 
+ngOnInit() {
+  console.log("playstat = " + JSON.stringify(this.playstat))
+  console.log("timebar = "+JSON.stringify(this.timebar) )
+}
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {
     iconRegistry.addSvgIcon(
@@ -123,21 +137,4 @@ volumehigh(){
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/volume-high.svg'));
 
   }
-
-  private toggleText: string = "Hide";
-  private show: boolean = true;
-
-  public onToggle(): void {
-      this.show = !this.show;
-      this.toggleText = this.show ? "Hidе" : "Show";
-  }
-
-
-
-  ngOnInit() {
-    
-  }
-
-  
-
 }

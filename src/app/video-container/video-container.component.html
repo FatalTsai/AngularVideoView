@@ -2,8 +2,6 @@
 <!--https://stackoverflow.com/questions/14161516/html5-video-completely-hide-controls     hide video control css -->
 <!---https://www.w3schools.com/cssref/css3_pr_filter.asp-->
 <!--https://codepen.io/fatal_tsai/pen/WNbvGQv  add contrast-->
-<button mat-button (click)="forward($event)">Click me!</button>
-<span>{{inputTest}}</span>
 
 <video  controls #player  height="288" width="512" controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
   <source src="assets/Native.mp4" type="video/mp4">  

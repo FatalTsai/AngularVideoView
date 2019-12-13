@@ -10,10 +10,12 @@ import { Router,ActivatedRoute } from '@angular/router';
 export class AppComponent {
 
   playstat  = {
-    "isplaying":true
+    "isplaying":true,
+    "currentTime":0,
+    "duration":0
   }
   test = "test la"   
-  isplaying = true
+  playstatModified = true
  
 
   title = 'viewer';
@@ -23,30 +25,19 @@ export class AppComponent {
   ngOnInit() {
 
     //this.name = this.route.snapshot.paramMap.get('name'); // <-- 從route的snapshot取得Router Parameter:name
-    //console.log("this.name = "+this.name)
     console.log("router.url = "+ this.router.url)
     
-   
-    localStorage["playstat"] = JSON.stringify(this.playstat)
-    
-    //console.log(localStorage["playstat"]["currentTime"])
-    var data =  JSON.parse(localStorage["playstat"])
-    console.log(data["currentTime"])
-
-/*
-    localStorage["cur"]=240;
-    console.log("localStorage[\"cur\"] = "+localStorage["cur"] )
-*/
-
   }
 
   update(event){
-    this.isplaying = event
-    console.log("fuck")
+    this.playstatModified = event
+    console.log("playstat = " + JSON.stringify(this.playstat))
+
+    //console.log("fuck")
   }
   playstatUpadte(event){
     this.playstat = event
-    console.log("fuck")
+    //console.log("fuck")
   }
   
 }

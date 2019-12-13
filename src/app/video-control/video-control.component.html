@@ -1,9 +1,9 @@
 <div class="scrubber">
 
-    <span class="elapsed-time">{{elapsed| date:'mm:ss'}}</span>
+    <span class="elapsed-time">{{currentTime| date:'mm:ss'}}</span>
 
     <!---         <scrubber value="{{currentTime}}" max="{{maxTime}}"></scrubber>   -->
-    <mat-slider #timebar (change)="timeupdate($event)" step="1" min="0" max="100" value="0"></mat-slider>
+    <mat-slider #timebar (change)="currentTimeUpdate($event)" step="1" min="0" max="duration" value="0"></mat-slider>
 
     <span class="total-time">{{duration | date:'mm:ss'}}</span>
 
@@ -58,12 +58,12 @@
     <button mat-button >
             <mat-icon svgIcon="player-stop"></mat-icon>
     </button>
-    <button play mat-button (click) ="play(true)" *ngIf="!isplaying">
+    <button play mat-button (click) ="play(true)" *ngIf="!playstat['isplaying']">
             <mat-icon svgIcon="player-play"  ></mat-icon>
     </button>
 
     <!--- appear when playing--->    
-    <button mat-button  (click) ="play(false)" *ngIf="isplaying">
+    <button mat-button  (click) ="play(false)" *ngIf="playstat['isplaying']">
             <mat-icon svgIcon="player-pause"></mat-icon>
 
     </button>
