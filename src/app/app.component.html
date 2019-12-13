@@ -534,8 +534,9 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <div class="spacer" *ngIf="0"></div>
-<app-video-container [isplaying]="isplaying" *ngIf="router.url === '/' "></app-video-container>
-<app-video-control [isplaying]="isplaying"   (change)="isplaying = $event" *ngIf="router.url === '/' "></app-video-control>
+<app-video-container [isplaying]="isplaying" [playstat]="playstat"   *ngIf="router.url === '/' "></app-video-container>
+<app-video-control [isplaying]="isplaying"   [playstat]="playstat"    (change)="update($event)"  (playstatUpadte)="playstatUpadte($event)" 
+*ngIf="router.url === '/' "></app-video-control>
 
 
 <router-outlet *ngIf ="1"></router-outlet>

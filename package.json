@@ -2,17 +2,15 @@
   "name": "viewer",
   "main": "main.js",
   "version": "0.0.0",
-  
-  "build" : {
-    "appId" :"viewer",
-    "mac":{
-      "category" :"your.app.category.type"
+  "build": {
+    "appId": "viewer",
+    "mac": {
+      "category": "your.app.category.type"
     },
-    "directories":{
-      "output" : "packaged"
+    "directories": {
+      "output": "packaged"
     }
   },
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,12 +18,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron-build" :"ng build --prod",
-    "electron":"electron .",
-    "pack" : "electron-builder --dir",
-    "dist" : "electron-builder"
-   
-
+    "electron-build": "ng build --prod",
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "private": true,
   "dependencies": {

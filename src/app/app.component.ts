@@ -10,11 +10,10 @@ import { Router,ActivatedRoute } from '@angular/router';
 export class AppComponent {
 
   playstat  = {
-    "currentTime": 240,
     "isplaying":true
   }
   test = "test la"   
-  isplaying = false
+  isplaying = true
  
 
   title = 'viewer';
@@ -41,5 +40,13 @@ export class AppComponent {
 
   }
 
+  update(event){
+    this.isplaying = event
+    console.log("fuck")
+  }
+  playstatUpadte(event){
+    this.playstat = event
+    console.log("fuck")
+  }
   
 }

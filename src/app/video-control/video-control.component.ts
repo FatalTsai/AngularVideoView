@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
 })
 export class VideoControlComponent implements OnInit {
   @Input() isplaying : boolean =true;
-  @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Input() playstat : object
+  @Output() change: EventEmitter<any> = new EventEmitter<any>()
+  @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
+
   timebar: number = 0;
-  playstat
   timebar_value_label = new Date(1970,0,1).setSeconds(this.timebar);
 
   elapsed= new Date(1970, 0, 1).setSeconds(this.timebar);
@@ -30,22 +32,13 @@ timeupdate(event) {
 zoombarvalue :number = 0;
 play(value)
 {
-  console.log("isplaying = "+this.isplaying)
+  //console.log("isplaying = "+this.isplaying) 
 
-  this.playstat = JSON.parse(localStorage["playstat"])
- 
-  if(value){
-    this.isplaying = false;
-    this.playstat["isplaying"] = false
-    this.change.emit(this.isplaying)
-  }
-  else{
-    this.isplaying = true
-    this.playstat["isplaying"] = true
-    this.change.emit(this.isplaying)
-  }
-  localStorage["playstat"] = JSON.stringify(this.playstat)
-
+  this.isplaying = value;
+  this.playstat["isplaying"] = value
+  this.playstatUpadte.emit(this.playstat)
+  this.change.emit(this.isplaying)
+  
 }
 zoomout(){
 

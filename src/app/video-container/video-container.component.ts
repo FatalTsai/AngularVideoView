@@ -9,6 +9,8 @@ import { EventEmitter } from 'events';
 })
 export class VideoContainerComponent implements OnInit {
   @Input() isplaying : boolean
+  @Input() playstat : object
+
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
@@ -31,7 +33,6 @@ export class VideoContainerComponent implements OnInit {
     }
  
 
-  name
   ngOnInit() {
     //this.name = this.route.snapshot.paramMap; // <-- 從route的snapshot取得Router Parameter:name
     //console.log("this.name = "+this.name)
@@ -39,7 +40,7 @@ export class VideoContainerComponent implements OnInit {
 
   ngOnChanges(changes :SimpleChanges) {
     console.dir(changes['isplaying']);
-
+   /* 
     if(this.isplaying)
     {
       this.player.nativeElement.play();
@@ -48,6 +49,18 @@ export class VideoContainerComponent implements OnInit {
     {
       this.player.nativeElement.pause();
     }
+*/
+    console.log("playstat['this.isplaying'] = "+this.playstat['isplaying'])
+    if(this.playstat["isplaying"])
+    {
+      this.player.nativeElement.play();
+    }
+    else
+    {
+      this.player.nativeElement.pause();
+    }
+
+
 
 
 }
