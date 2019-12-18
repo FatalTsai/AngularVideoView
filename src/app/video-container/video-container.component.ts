@@ -8,6 +8,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './video-container.component.html',
   styleUrls: ['./video-container.component.css']
 })
+
+
+
 export class VideoContainerComponent implements OnInit {
   @Input() playstatModified : boolean = true
   @Input() playstat : object
@@ -17,15 +20,10 @@ export class VideoContainerComponent implements OnInit {
 
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
-/*
-  filters = {
-    'filter': 'brightness(0%)   saturate(100%) contrast(100%)',
-  }
-  */
-  filter = 'brightness(87%)   saturate(0%) contrast(100%)'
 
+  filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
-
+ 
 
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -44,9 +42,15 @@ export class VideoContainerComponent implements OnInit {
     this.playstat["LabelcurrentTime"] = new Date(1970, 0, 1).setSeconds(value.target.currentTime)
     this.playstat["duration"] = value.target.duration
     this.playstat["Labelduration"] = new Date(1970, 0, 1).setSeconds(value.target.duration)
-    
+    this.playstat['buffering'] = false
+
+
     this.playstatUpadte.emit(this.playstat)
     this.change.emit(this.playstatModified)
+
+
+    //this.player.nativeElement.onabort=console.log("The video duration has onloadstart");
+
     //console.log(this.timebar.nativeElement.max)
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
     }
@@ -59,8 +63,8 @@ export class VideoContainerComponent implements OnInit {
 
   ngOnInit() {
     this.player.nativeElement.controls = false //none display control buttons
-    //console.log(this.player.nativeElement.duration)
-    //NaH
+
+
   }
 
   ngOnChanges(changes :SimpleChanges) {
@@ -76,18 +80,13 @@ export class VideoContainerComponent implements OnInit {
     }
     this.player.nativeElement.currentTime = this.playstat["currentTime"]
     this.player.nativeElement.volume=this.playstat['volume']
-    //this.filters['filter'] = "brightness("+this.playstat['brightness']+") saturate("+this.playstat['saturate']+
-    //" contrast("+this.playstat['contrast']+")"
-    //this.player.nativeElement.style = "filter: "+this.filters['filter']
     this.filter ="filter: brightness("+this.playstat['brightness']+")" +
     " saturate(" + this.playstat['saturate']+ ")"+
     " contrast(" + this.playstat['contrast']+ ")"
-
-    console.log("filter = "+this.filter)
-    //this.player.nativeElement.style =this.filter
     this.player.nativeElement.style =this.filter
-    //console.log("filters = "+JSON.stringify(this.filters))
-    //console.log("volume = "+this.player.nativeElement.volume)
+
+    
+
     if(this.playstat['isfullscreen'])
     {
       if (this.player.nativeElement.requestFullscreen) {
@@ -106,7 +105,5 @@ export class VideoContainerComponent implements OnInit {
     }
 
 
-}
-
-
+  }
 }

@@ -18,9 +18,10 @@ export class AppComponent {
     "Labelduration":0,
     "isfullscreen":false,
     "volume":0.2,
-    "brightness":0,
+    "brightness":1,
     "saturate":1,
-    "contrast":1
+    "contrast":1,
+    "buffering":false
   }
   test = "test la"   
   playstatModified = true

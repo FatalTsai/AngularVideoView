@@ -7,11 +7,20 @@
   
 </button>
 
+<div class="watermarked">
 
-<video  controls #player  height="288" width="512"
-controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
-  <source src="assets/Native.mp4" type="video/mp4">  
-  <source src="star.mp4" type="video/mp4">   
-  Your browser does not support the video tag.
-</video>
+  <video  controls #player  height="288" width="512" (onloadstart)="loadstart()"
+  controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
+    <source src="assets/Native.mp4" type="video/mp4">  
+    <source src="star.mp4" type="video/mp4">   
+    Your browser does not support the video tag.
+  </video>
+</div>
 
+<!-- https://stackoverflow.com/questions/48365667/how-to-overlay-an-image-watermark-with-pure-css-and-html-->
+
+<!--
+<div class="watermarked">
+  <img src="http://placehold.it/500x325.jpg" alt="Photo">
+</div>
+--->

@@ -30,6 +30,8 @@ currentTimeUpdate(event) {
   this.currentTime= new Date(1970,0,1).setSeconds(event.value)
   this.playstat["currentTime"] = event.value
   this.playstatUpadte.emit(this.playstat)
+  this.playstat['buffering'] = true
+  console.log("fuck the slide updating")
   this.PlaystatModified()
 }
 
@@ -91,7 +93,7 @@ fullscreen()
 }
 
 
-brightnessbarvalue = 0
+brightnessbarvalue = 1
 contrastbarvalue = 1
 saturationbarvalue = 1 
 filterupdate()
