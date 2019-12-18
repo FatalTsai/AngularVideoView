@@ -28,10 +28,9 @@ export class VideoControlComponent implements OnInit {
 
 currentTimeUpdate(event) {
   this.currentTime= new Date(1970,0,1).setSeconds(event.value)
-  this.playstatModified = !this.playstatModified;
   this.playstat["currentTime"] = event.value
   this.playstatUpadte.emit(this.playstat)
-  this.change.emit(this.playstatModified)
+  this.PlaystatModified()
 }
 
 
@@ -39,56 +38,75 @@ currentTimeUpdate(event) {
 
 play(value)
 {
-  this.playstatModified = !this.playstatModified;
   this.playstat["isplaying"] = value
-  this.playstatUpadte.emit(this.playstat)
   this.change.emit(this.playstatModified)
+  this.PlaystatModified()
+  
   
 }
 zoombarvalue :number = 0;
 
-zoomout(){
+zoomout(value){
 
-  if(this.zoombarvalue >0)
-    this.zoombarvalue -= 5;
-  console.log("zoomout")
-}
-zoomin(){
-
-  if(this.zoombarvalue <100)
+  if(value){
+    if(this.zoombarvalue >0)
+      this.zoombarvalue -= 5;
+    console.log("zoomout")
+  }
+  else
+  {
+    if(this.zoombarvalue <100)
     this.zoombarvalue += 5;
-  console.log("zoomin")
+    console.log("zoomin")
+  }
+ 
 }
+
 
 volumebarvalue :number = 0;
-
-volumelow(){
-
-  if(this.volumebarvalue >0)
-    this.volumebarvalue -= 5;
-  console.log("volumelow")
-}
-volumehigh(){
-
-  if(this.volumebarvalue <100)
-    this.volumebarvalue += 5;
-  console.log("volumehigh")
+volumehigh(value){
+  if(value == 1)
+  {
+    if(this.volumebarvalue <1)
+      this.volumebarvalue += 0.05;
+    console.log("volumehigh")
+  }
+  else if (value == 0)
+  {    
+    if(this.volumebarvalue >0)
+    this.volumebarvalue -= 0.05;
+    console.log("volumelow")
+  }
+  this.volumebarvalue = this.volumebarvalue>1 ? 1: this.volumebarvalue
+  this.volumebarvalue = this.volumebarvalue<0 ? 0: this.volumebarvalue
+  this.playstat['volume'] = this.volumebarvalue
+  this.PlaystatModified()
 }
 
 fullscreen()
 {
-  this.playstatModified = !this.playstatModified;
-  this.change.emit(this.playstatModified)
-
+  this.PlaystatModified()
   this.playstatUpadte.emit(this.playstat)
   this.playstat["isfullscreen"] = true
+}
+
+
+brightnessbarvalue = 0
+contrastbarvalue = 1
+saturationbarvalue = 1 
+filterupdate()
+{
+  this.playstat['brightness'] = this.brightnessbarvalue
+  this.playstat['saturate'] =  this.saturationbarvalue
+  this.playstat['contrast'] =  this.contrastbarvalue
+  this.PlaystatModified()
 }
 
 
 
 
 private toggleText: string = "Hide";
-private show: boolean = true;
+private show: boolean = false;
 
 public onToggle(): void {
     this.show = !this.show;
@@ -105,11 +123,15 @@ public onToggle(): void {
   }
 
   ngOnChanges(changes :SimpleChanges) {
-    console.log("from control")
+    //console.log("from control")
     this.timebar.value = this.playstat["currentTime"]
   }
 
-
+  private PlaystatModified()
+  {
+    this.playstatModified = !this.playstatModified;
+    this.change.emit(this.playstatModified)
+  }
 
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {

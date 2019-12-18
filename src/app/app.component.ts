@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router,ActivatedRoute } from '@angular/router';
@@ -9,13 +9,18 @@ import { Router,ActivatedRoute } from '@angular/router';
 })
 export class AppComponent {
 
+
   playstat  = {
     "isplaying":true,
     "currentTime":0,
     "duration":0,
     "LabelcurrentTime": 0,
     "Labelduration":0,
-    "isfullscreen":false
+    "isfullscreen":false,
+    "volume":0.2,
+    "brightness":0,
+    "saturate":1,
+    "contrast":1
   }
   test = "test la"   
   playstatModified = true
@@ -27,7 +32,6 @@ export class AppComponent {
 
   name : String
   ngOnInit() {
-
     //this.name = this.route.snapshot.paramMap.get('name'); // <-- 從route的snapshot取得Router Parameter:name
     console.log("router.url = "+ this.router.url)
     
