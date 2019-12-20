@@ -17,7 +17,7 @@ export class VideoContainerComponent implements OnInit {
   @Output() change: EventEmitter<any> = new EventEmitter<any>()
   @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
-
+  @ViewChild('watermark',{static :true})watermark :ElementRef
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
 
@@ -37,29 +37,33 @@ export class VideoContainerComponent implements OnInit {
     console.log(value.target.currentTime);
     //console.log("ispaused = "+this.player.nativeElement.paused		)
     //console.log("isfullscreen? = "+ (this.player.nativeElement.webkitFullscreenElement ))
-    this.playstatModified = !this.playstatModified;
     this.playstat["currentTime"] = value.target.currentTime
     this.playstat["LabelcurrentTime"] = new Date(1970, 0, 1).setSeconds(value.target.currentTime)
     this.playstat["duration"] = value.target.duration
     this.playstat["Labelduration"] = new Date(1970, 0, 1).setSeconds(value.target.duration)
     this.playstat['buffering'] = false
-
-
-    this.playstatUpadte.emit(this.playstat)
-    this.change.emit(this.playstatModified)
+    this.watermark.nativeElement.style='visibility: hidden'
+    this.PlaystatModified();
 
 
     //this.player.nativeElement.onabort=console.log("The video duration has onloadstart");
 
     //console.log(this.timebar.nativeElement.max)
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
-    }
-    click()
-    {
-      //var elem = document.getElementById("myvideo");
+  }
+  private PlaystatModified()
+  {
+    this.playstatModified = !this.playstatModified;
+    this.change.emit(this.playstatModified)
+  }
 
-    }
- 
+
+  click()
+  {
+    //var elem = document.getElementById("myvideo");
+
+  }
+
 
   ngOnInit() {
     this.player.nativeElement.controls = false //none display control buttons
@@ -84,6 +88,18 @@ export class VideoContainerComponent implements OnInit {
     " saturate(" + this.playstat['saturate']+ ")"+
     " contrast(" + this.playstat['contrast']+ ")"
     this.player.nativeElement.style =this.filter
+
+    if(this.playstat['buffering'])
+    {
+      this.watermark.nativeElement.style ='  visibility: visible;'
+    }
+    else
+    {
+      this.watermark.nativeElement.style='visibility: hidden'
+    }
+
+
+
 
     
 

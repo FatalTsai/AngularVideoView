@@ -7,17 +7,24 @@
   
 </button>
 
-<div class="watermarked">
-
-  <video  controls #player  height="288" width="512" (onloadstart)="loadstart()"
+<div id="test">
+  <video  controls #player   (onloadstart)="loadstart()" height="288" width="512"
   controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)" >
     <source src="assets/Native.mp4" type="video/mp4">  
     <source src="star.mp4" type="video/mp4">   
     Your browser does not support the video tag.
-  </video>
-</div>
+</video>  
 
-<!-- https://stackoverflow.com/questions/48365667/how-to-overlay-an-image-watermark-with-pure-css-and-html-->
+
+  <div #watermark id="watermark">
+    <img src="assets/loading.gif" width="20px" height="20px">
+  </div>
+
+<div> 
+
+
+<!-- https://stackoverflow.com/questions/48365667/how-to-overlay-an-image-watermark-with-pure-css-and-html
+     https://stackoverflow.com/questions/21458162/creating-watermark-using-html-and-css/21458263-->
 
 <!--
 <div class="watermarked">
