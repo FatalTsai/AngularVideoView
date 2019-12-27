@@ -6,7 +6,7 @@
     <mat-slider #timebar (change)="currentTimeUpdate($event)" step="0.1" 
     min="0" [max]="this.playstat['duration']" [value]="this.playstat['currentTime']"></mat-slider>
 
-    <span class="total-time">{{this.playstat["Labelduration"]| date:'mm:ss'}}</span>
+<span class="total-time">{{this.playstat["Labelduration"]| date:'mm:ss'}}</span>
 
     
 </div>
@@ -24,21 +24,19 @@
     
         <button mat-button (click)=zoomout(false)>
             <mat-icon svgIcon="zoom-in"></mat-icon>
-        </button>
+    	</button>
     </div>
         
     <div class="space"></div>
     <!-- https://www.telerik.com/kendo-angular-ui/components/popup/ -->
-    <kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
-
+     <kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
         <span>brightness</span>
         <mat-slider #brightnessbar (change)="filterupdate()" step="0.01" min="0" max="2" [(ngModel)]="brightnessbarvalue"></mat-slider>
         <span>contrast</span>
         <mat-slider #contrastbar   (change)="filterupdate()" step="0.01" min="0" max="2" [(ngModel)]="contrastbarvalue"></mat-slider>
         <span>saturation</span>
         <mat-slider #saturationbar (change)="filterupdate()" step="0.01" min="0" max="2" [(ngModel)]="saturationbarvalue"></mat-slider>
-            
-        </kendo-popup>
+    </kendo-popup>
     <div class="example-config">
             <button #anchor (click)="onToggle()" class="k-button">
                 <mat-icon svgIcon="equalizer"></mat-icon>
@@ -55,18 +53,18 @@
     <button mat-button >
             <mat-icon svgIcon="player-previous"></mat-icon>
     </button>
-    <button mat-button >
-            <mat-icon svgIcon="player-stop"></mat-icon>
+    <button mat-button>
+            <mat-icon class="player_bigger" svgIcon="player-stop"></mat-icon>
     </button>
-    <button play mat-button (click) ="play(true)" *ngIf="!playstat['isplaying']">
-            <mat-icon svgIcon="player-play"  ></mat-icon>
+    <button play mat-button  (click) ="play(true)" *ngIf="!playstat['isplaying']">
+            <mat-icon class ="player_bigger" svgIcon="player-play"  ></mat-icon>
     </button>
 
     <!--- appear when playing--->    
-    <button mat-button  (click) ="play(false)" *ngIf="playstat['isplaying']">
-            <mat-icon svgIcon="player-pause"></mat-icon>
-
+    <button mat-button #player_pause (click) ="play(false)" *ngIf="playstat['isplaying']">
+            <mat-icon class ="player_bigger" svgIcon="player-pause"></mat-icon>
     </button>
+
     <button mat-button >
             <mat-icon svgIcon="player-next"></mat-icon>
     </button>
@@ -75,8 +73,9 @@
     </button>
     <button mat-button (click)="fullscreen()">
             <mat-icon svgIcon="fullscreen"></mat-icon>
-    </button>    
-
+    </button>   
+    
+    
     <div class="space"></div>
 
     <div class="volume-control">

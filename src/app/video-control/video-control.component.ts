@@ -21,7 +21,7 @@ export class VideoControlComponent implements OnInit {
   //currentTime= new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
   //duration = new Date(1970, 0, 1).setSeconds(this.playstat["currentTime"] ? this.playstat["currentTime"] : 0);
   //ref :https://stackblitz.com/edit/angular-display-mat-slider-value?file=app%2Fslider-overview-example.ts
-
+  // slide style ref :https://stackblitz.com/edit/angular-cbtsy3?file=styles.css
   
   
 

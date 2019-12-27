@@ -29,7 +29,8 @@ import { VideoContainerComponent } from './video-container/video-container.compo
     MatSliderModule,
     HttpClientModule,
     FormsModule,
-    PopupModule     
+    PopupModule,
+    BrowserModule     
   ],
   providers: [],
   bootstrap: [AppComponent]

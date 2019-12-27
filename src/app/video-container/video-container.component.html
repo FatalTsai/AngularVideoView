@@ -3,9 +3,7 @@
 <!---https://www.w3schools.com/cssref/css3_pr_filter.asp-->
 <!--https://codepen.io/fatal_tsai/pen/WNbvGQv  add contrast-->
 
-<button mat-button (click)="click()">
   
-</button>
 
 <div id="test">
   <video  controls #player   (onloadstart)="loadstart()" height="288" width="512"
@@ -21,6 +19,10 @@
   </div>
 
 <div> 
+
+<button class="transparent-button" (click)="zoomToggle(false)">-</button>
+<span>{{currentZoomLevel * 100}}%</span>
+<button class="transparent-button" (click)="zoomToggle(true)">+</button>
 
 
 <!-- https://stackoverflow.com/questions/48365667/how-to-overlay-an-image-watermark-with-pure-css-and-html

@@ -7,6 +7,17 @@
     justify-content: left;
     background-color: #001b29;
 }
+button{
+  border: none;
+  padding: 0;
+  background: none;
+
+}
+.player_bigger{
+  height: 35px;
+  width: 35px;
+}
+
 .scrubber {
     color: rgba(255,255,255,.9);
     font-size: 14px;
@@ -15,32 +26,6 @@
 .scrubber mat-slider{
     width: 500px;
 }
-
-.mat-slider.mat-slider-horizontal .mat-slider-wrapper {
-    top: 18px;
-  }
-  .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
-    height: 12px;
-    border-radius: 10px
-  }
-  .mat-slider.mat-slider-horizontal .mat-slider-track-background,
-  .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-    height: 100%;
-  }
-  .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-    background-color: blue;
-  }
-  .mat-accent .mat-slider-thumb {
-    height: 30px;
-    width: 30px;
-    background-color: white;
-    border: solid 2px gray;
-    bottom: -20px;
-    right: -20px;
-  }
-  .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
-    background-color: white;
-  }
 
 
 
@@ -75,5 +60,7 @@
   .controls kendo-popup{
    position: absolute ;
    top:  -207px !important;
+   background-color: #00bfff !important;
+   color: blanchedalmond;
    
   }
