@@ -19,6 +19,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   @Output() playstatUpadte :EventEmitter<object> = new EventEmitter<object>()
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
   @ViewChild('watermark',{static :true})watermark :ElementRef
+  @ViewChild('videoframe',{static :true})videoframe :ElementRef
+
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
 
@@ -144,8 +146,19 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     }
 
   }
-
+  /*
   zoomToggle(zoomIn: boolean) {
+
+    if(zoomIn)
+    {
+      this.panZoomController.zoomIn();
+    }
+    else{
+      this.panZoomController.zoomOut();
+    }
+
+
+    /*
     const idx = this.zoomLevels.indexOf(this.currentZoomLevel);
     if (zoomIn) {
       if (typeof this.zoomLevels[idx + 1] !== 'undefined') {
@@ -161,15 +174,33 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
       this.panZoomController.zoomAbs(0, 0, 1);
     } else {
       this.zoom();
-    }
-  }
+    }*/
+  //}
 
   ngAfterViewInit() {
 
     this.zoomLevels = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
     this.currentZoomLevel = this.zoomLevels[4];
     // panzoom(document.querySelector('#scene'));
-    this.panZoomController = panzoom(this.player.nativeElement);
+    //console.log("panzoom = "+panzoom)
+    console.log("this.play.native = "+JSON.stringify(this.player.nativeElement) )
+    this.panZoomController = panzoom(this.player.nativeElement , {
+      maxZoom: 10,
+      minZoom: 0.3,
+      bounds: {
+        top: 150,
+        right: 50,
+        bottom: 50,
+        left: 150,
+      },
+      //bounds:false,
+      boundsPadding: 0.1,
+
+    });
+    
+    //console.log("panzoomController = "+this.panZoomController)
+
+
   }
 
 

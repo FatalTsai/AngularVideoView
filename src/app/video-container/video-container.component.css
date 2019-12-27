@@ -1,4 +1,7 @@
+.videoframe{
+  overflow : hidden !important; 
 
+}
 video ::-webkit-full-screen {
     background-color: yellow;
     height: 90%;
@@ -15,4 +18,9 @@ video ::-webkit-full-screen {
    z-index:99;
    color:black;
    visibility: hidden;
+  }
+  
+  video{
+    overflow:hidden; 
+    position: relative;
   }
