@@ -70,7 +70,9 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   ngOnInit() {
     this.player.nativeElement.controls = false //none display control buttons
- 
+    this.player.nativeElement.addEventListener('panzoomchange', (event) => {
+      console.log(event.detail) // => { x: 0, y: 0, scale: 1 }
+    })
 
   }
 
@@ -89,7 +91,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     this.player.nativeElement.volume=this.playstat['volume']
     this.filter ="filter: brightness("+this.playstat['brightness']+")" +
     " saturate(" + this.playstat['saturate']+ ")"+
-    " contrast(" + this.playstat['contrast']+ ")"
+    " contrast(" + this.playstat['contrast']+ ")"  //error clear panzoom/transform data
     this.player.nativeElement.style =this.filter
 
     if(this.playstat['buffering'])
@@ -184,6 +186,10 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     // panzoom(document.querySelector('#scene'));
     //console.log("panzoom = "+panzoom)
     console.log("this.play.native = "+JSON.stringify(this.player.nativeElement) )
+    //ref (set panzoom bounds): https://github.com/anvaka/panzoom/issues/33
+    //ref :https://github.com/anvaka/panzoom#readme
+    // https://timmywil.com/panzoom/demo/
+  
     this.panZoomController = panzoom(this.player.nativeElement , {
       maxZoom: 10,
       minZoom: 0.3,
