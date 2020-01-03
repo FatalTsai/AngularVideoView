@@ -49,19 +49,19 @@ play(value)
 zoombarvalue :number = 0;
 
 zoomout(value){
-
   if(value){
-    if(this.zoombarvalue >0)
-      this.zoombarvalue -= 5;
+    if(this.zoombarvalue >0.3)
+      this.zoombarvalue -= 0.2;
     console.log("zoomout")
   }
   else
   {
-    if(this.zoombarvalue <100)
-    this.zoombarvalue += 5;
+    if(this.zoombarvalue <10)
+    this.zoombarvalue += 0.2;
     console.log("zoomin")
   }
- 
+  this.playstat['zoom'] = this.zoombarvalue
+  this.PlaystatModified()
 }
 
 
@@ -127,6 +127,8 @@ public onToggle(): void {
   ngOnChanges(changes :SimpleChanges) {
     //console.log("from control")
     this.timebar.value = this.playstat["currentTime"]
+    this.zoombarvalue = this.playstat["zoom"]
+
   }
 
   private PlaystatModified()

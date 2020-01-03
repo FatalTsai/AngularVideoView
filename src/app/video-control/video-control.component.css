@@ -21,18 +21,11 @@ button{
 .scrubber {
     color: rgba(255,255,255,.9);
     font-size: 14px;
-    width: 90%;
+    width: 600px;
 }
 .scrubber mat-slider{
     width: 500px;
 }
-
-
-
-
-
-
-
 
 .controls{
     display: flex;

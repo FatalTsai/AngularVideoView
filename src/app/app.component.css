@@ -6,3 +6,6 @@ app-video-control{
 .spacer {
     height: 80%;
 }
+*{
+    background-color: #001b29;
+}

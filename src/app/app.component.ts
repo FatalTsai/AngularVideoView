@@ -21,7 +21,8 @@ export class AppComponent {
     "brightness":1,
     "saturate":1,
     "contrast":1,
-    "buffering":false
+    "buffering":false,
+    "zoom":1
   }
   test = "test la"   
   playstatModified = true
@@ -41,8 +42,6 @@ export class AppComponent {
   update(event){
     this.playstatModified = event
     console.log("playstat = " + JSON.stringify(this.playstat))
-
-    //console.log("fuck")
   }
   playstatUpadte(event){
     this.playstat = event

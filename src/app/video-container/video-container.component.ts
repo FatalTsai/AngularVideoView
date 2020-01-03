@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { tick } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import panzoom from "panzoom";
+import { SCALE } from '@progress/kendo-angular-popup';
 
 @Component({
   selector: 'app-video-container',
@@ -26,8 +27,6 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
- 
-
 
   constructor(private sanitizer: DomSanitizer) {}
   public getSantizeUrl(url : string) {
@@ -46,7 +45,6 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     this.playstat["Labelduration"] = new Date(1970, 0, 1).setSeconds(value.target.duration)
     this.playstat['buffering'] = false
     this.watermark.nativeElement.style='visibility: hidden'
-    this.PlaystatModified();
 
 
     //this.player.nativeElement.onabort=console.log("The video duration has onloadstart");
@@ -54,8 +52,9 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //console.log(this.timebar.nativeElement.max)
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
   }
-  private PlaystatModified()
+  PlaystatModified(value)
   {
+    console.log(value)
     this.playstatModified = !this.playstatModified;
     this.change.emit(this.playstatModified)
   }
@@ -66,13 +65,12 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //var elem = document.getElementById("myvideo");
 
   }
-
+  
 
   ngOnInit() {
+    this.player.nativeElement.style = this.filter
     this.player.nativeElement.controls = false //none display control buttons
-    this.player.nativeElement.addEventListener('panzoomchange', (event) => {
-      console.log(event.detail) // => { x: 0, y: 0, scale: 1 }
-    })
+    
 
   }
 
@@ -92,8 +90,12 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     this.filter ="filter: brightness("+this.playstat['brightness']+")" +
     " saturate(" + this.playstat['saturate']+ ")"+
     " contrast(" + this.playstat['contrast']+ ")"  //error clear panzoom/transform data
-    this.player.nativeElement.style =this.filter
+    this.player.nativeElement.style=this.filter + ";  transform : " + this.player.nativeElement.style["transform"] 
+    console.log(this.player.nativeElement.style)
 
+    console.log(this.panZoomController)
+   // this.panZoomController.setTransformOrigin({x: 0, y: 0}); // now it is topLeft
+    this.zoom(this.playstat["zoom"])
     if(this.playstat['buffering'])
     {
       this.watermark.nativeElement.style ='  visibility: visible;'
@@ -102,6 +104,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     {
       this.watermark.nativeElement.style='visibility: hidden'
     }
+
 
     if(this.playstat['isfullscreen'])
     {
@@ -125,12 +128,12 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   panZoomController;
   zoomLevels: number[];
-
   currentZoomLevel: number;
 
-  zoom() {
+  zoom(scale) {
+    console.log("fuck ou")
     const isSmooth = false;
-    const scale = this.currentZoomLevel;
+    //const scale = this.currentZoomLevel;
 
 
     if (scale) {
@@ -148,7 +151,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     }
 
   }
-  /*
+  /* ref: https://stackblitz.com/edit/angular-panmaw
   zoomToggle(zoomIn: boolean) {
 
     if(zoomIn)
@@ -181,8 +184,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit() {
 
-    this.zoomLevels = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
-    this.currentZoomLevel = this.zoomLevels[4];
+    //this.zoomLevels = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
+    //this.currentZoomLevel = this.zoomLevels[4];
     // panzoom(document.querySelector('#scene'));
     //console.log("panzoom = "+panzoom)
     console.log("this.play.native = "+JSON.stringify(this.player.nativeElement) )
@@ -205,7 +208,15 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     });
     
     //console.log("panzoomController = "+this.panZoomController)
+    this.panZoomController.on('zoom', function(e) {
+      console.log('Fired when `element` is zoomed', e);
+      console.log(e.getTransform() )
+      //console.log(this.playstat)
+      this.playstat['zoom'] = e.getTransform().scale
+      console.log("playstat[zoom] = "+this.playstat["zoom"])
+      this.PlaystatModified("from panzoom");
 
+    }.bind(this));
 
   }
 
