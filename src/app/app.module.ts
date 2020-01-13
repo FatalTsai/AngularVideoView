@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { VideoContainerComponent } from './video-container/video-container.component';
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { VideoContainerComponent } from './video-container/video-container.compo
     AppComponent,
     VideoControlComponent,
     VideoContainerComponent,
+    MapComponent,
     
     
     

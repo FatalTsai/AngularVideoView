@@ -8,6 +8,9 @@ video ::-webkit-full-screen {
     width: 90%;
   }
   
+  video ::-webkit-media-controls {
+    display:none !important;
+  }
  
   #watermark
   {

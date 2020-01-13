@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { tick } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import panzoom from "panzoom";
-import { SCALE } from '@progress/kendo-angular-popup';
 
 @Component({
   selector: 'app-video-container',
