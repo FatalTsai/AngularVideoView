@@ -58,6 +58,18 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     this.change.emit(this.playstatModified)
   }
 
+  onplay()
+  {
+    this.playstat['isplaying'] = true
+    this.PlaystatModified()
+    //console.log("start playing ")
+  }
+  onpause()
+  {
+    this.playstat['isplaying'] = false
+    this.PlaystatModified()
+    //console.log("starting pausing")
+  }
 
   click()
   {
@@ -90,9 +102,9 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     " saturate(" + this.playstat['saturate']+ ")"+
     " contrast(" + this.playstat['contrast']+ ")"  //error clear panzoom/transform data
     this.player.nativeElement.style=this.filter + ";  transform : " + this.player.nativeElement.style["transform"] 
-    console.log(this.player.nativeElement.style)
+    //console.log(this.player.nativeElement.style)
 
-    console.log(this.panZoomController)
+    //console.log(this.panZoomController)
    // this.panZoomController.setTransformOrigin({x: 0, y: 0}); // now it is topLeft
     this.zoom(this.playstat["zoom"])
     if(this.playstat['buffering'])
