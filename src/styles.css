@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
+/*
+ref :https://stackblitz.com/edit/angular-3o5j5d?file=app/slider-overview-example.css
+https://www.ojit.com/article/1134754
+*/
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

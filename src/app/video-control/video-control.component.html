@@ -20,7 +20,7 @@
             <mat-icon svgIcon="zoom-out"></mat-icon>
         </button>
     
-        <mat-slider #zoombar step="0.2" min="0.3" max="10" [(ngModel)]="zoombarvalue"></mat-slider>
+        <mat-slider #zoombar step="0.2" min="0.7" max="3" (change)="zoomupdate()" [(ngModel)]="zoombarvalue"></mat-slider>
     
         <button mat-button (click)=zoomout(false)>
             <mat-icon svgIcon="zoom-in"></mat-icon>

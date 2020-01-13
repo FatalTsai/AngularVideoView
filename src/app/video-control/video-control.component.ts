@@ -63,6 +63,13 @@ zoomout(value){
   this.playstat['zoom'] = this.zoombarvalue
   this.PlaystatModified()
 }
+zoomupdate()
+{
+  console.log("zoom change!")
+  this.playstat['zoom'] = this.zoombarvalue
+  this.PlaystatModified()
+}
+
 
 
 volumebarvalue :number = 0;

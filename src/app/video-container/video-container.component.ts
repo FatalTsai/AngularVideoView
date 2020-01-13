@@ -52,9 +52,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //console.log(this.timebar.nativeElement.max)
     //ref : https://stackoverflow.com/questions/48059697/angular-5-get-current-time-of-video
   }
-  PlaystatModified(value)
+  PlaystatModified()
   {
-    console.log(value)
     this.playstatModified = !this.playstatModified;
     this.change.emit(this.playstatModified)
   }
@@ -131,7 +130,6 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   currentZoomLevel: number;
 
   zoom(scale) {
-    console.log("fuck ou")
     const isSmooth = false;
     //const scale = this.currentZoomLevel;
 
@@ -146,7 +144,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
       if (isSmooth) {
         this.panZoomController.smoothZoom(0, 0, scale);
       } else {
-        this.panZoomController.zoomTo(offsetX, offsetY, scale);
+        console.log("in zoomAbs scale = "+scale)
+        this.panZoomController.zoomAbs(offsetX, offsetY, scale);
       }
     }
 
@@ -193,21 +192,58 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //ref :https://github.com/anvaka/panzoom#readme
     // https://timmywil.com/panzoom/demo/
   
+
     this.panZoomController = panzoom(this.player.nativeElement , {
-      maxZoom: 10,
-      minZoom: 0.3,
+      maxZoom: 3,
+      minZoom: 0.7,
       bounds: {
         top: 150,
         right: 50,
         bottom: 50,
         left: 150,
       },
+      zoomDoubleClickSpeed: 1, //value of 1 will disable double click zoom completely.
       //bounds:false,
       boundsPadding: 0.1,
+      beforeWheel: function(e) {
+        // allow wheel-zoom only if altKey is down. Otherwise - ignore
+        var shouldIgnore = !e.altKey;
+        return shouldIgnore;
+      },
+   
+      beforeMouseDown: function(e) {
+        // allow mouse-down panning only if altKey is down. Otherwise - ignore
+        var shouldIgnore = !e.altKey;
+        return shouldIgnore;
+      }
+    
+      
 
     });
+
+    //use method ref : 
+    //https://developer.mozilla.org/en-US/docs/Web/API/Element/fullscreenchange_event
+    //https://stackoverflow.com/questions/41609937/how-to-bind-event-listener-for-rendered-elements-in-angular-2
+    this.player.nativeElement.addEventListener('fullscreenchange', (event) => {
+      // document.fullscreenElement will point to the element that
+      // is in fullscreen mode if there is one. If not, the value
+      // of the property is null.
+      if (document.fullscreenElement) {
+        console.log(`Element: ${document.fullscreenElement.id} entered fullscreen mode.`);
+      } else {
+        console.log('Leaving full-screen mode.');
+        this.playstat["isfullscreen"] = false
+        this.PlaystatModified()
+      }
+    }).bind(this);
+
+
+
+
+    
     
     //console.log("panzoomController = "+this.panZoomController)
+    /*
     this.panZoomController.on('zoom', function(e) {
       console.log('Fired when `element` is zoomed', e);
       console.log(e.getTransform() )
@@ -217,8 +253,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
       this.PlaystatModified("from panzoom");
 
     }.bind(this));
-
+ */
   }
-
+ 
 
 }

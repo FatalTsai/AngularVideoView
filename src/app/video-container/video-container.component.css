@@ -23,4 +23,6 @@ video ::-webkit-full-screen {
   video{
     overflow:hidden; 
     position: relative;
+    transform : matrix( 1, 0, 0, 1, 0, 0 );
+    
   }
