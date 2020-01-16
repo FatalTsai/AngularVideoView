@@ -12,6 +12,9 @@ import { Direction } from '@angular/cdk/bidi';
 })
 export class MapComponent implements OnInit {
 
+
+
+
   @ViewChild("mapRef",{static : true}) mapRef: ElementRef;
   constructor( @Inject(DOCUMENT) private document,
     private elementRef: ElementRef) {
@@ -25,18 +28,14 @@ export class MapComponent implements OnInit {
 
   }
   ngOnInit() {
-
     var self=this;
     setTimeout(function () {
-      self.showMap();
+      self.initMap();
     }, 2000)
-
-
-
   }
 
   showMap() {
-    
+    //https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
     const directionsService = new google.maps.DirectionsService();
     const directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -55,7 +54,8 @@ export class MapComponent implements OnInit {
     this.addMarket(map, location);
 
     directionsDisplay.setMap(map);
-
+/* 
+//direction service
 //routing setting 
 var request : Object = {
       origin: { lat: 25.034010, lng: 121.562428 },
@@ -72,9 +72,50 @@ var request : Object = {
     } else {
         console.log(status);
     }
-});
+});*/
    
   }
+
+   initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: {
+        lat: 35.52868967362264,
+        lng: 139.56509764371336
+      },
+      mapTypeId: 'roadmap',
+    });
+  
+    var bikeLaneCoordinates = [{
+        lat: 35.52868967362264,
+        lng:  139.56509764371336
+      },
+      {
+        lat: 35.528586353058095,
+        lng: 139.56519597363808
+      },
+      {
+        lat: 35.52848136597603,
+        lng: 139.56529263711124
+      },
+      {
+        lat: 35.52837137957425,
+        lng: 139.56539763345592
+      }
+    ];
+    var bikeLanePath = new google.maps.Polyline({
+      path: bikeLaneCoordinates,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+  
+    bikeLanePath.setMap(map);
+  }
+
+
+
  
   addMarket(pos, map) {
     return new google.maps.Marker({
@@ -83,3 +124,4 @@ var request : Object = {
     });
   }
 }
+
