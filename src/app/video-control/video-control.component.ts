@@ -114,8 +114,8 @@ filterupdate()
 
 
 
-private toggleText: string = "Hide";
-private show: boolean = false;
+public toggleText: string = "Hide";
+public show: boolean = false;
 
 public onToggle(): void {
     this.show = !this.show;

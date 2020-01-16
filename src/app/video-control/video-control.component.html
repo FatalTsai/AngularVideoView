@@ -85,7 +85,7 @@
         
         </button>
     
-        <mat-slider #volume (change)="volumehigh()" step="0.01" min="0" max="1" [(ngModel)]="volumebarvalue"></mat-slider>
+        <mat-slider #volume (change)="volumehigh(-1)" step="0.01" min="0" max="1" [(ngModel)]="volumebarvalue"></mat-slider>
     
         <button mat-button (click)=volumehigh(1)>
             <mat-icon svgIcon="volume-high"  ></mat-icon>
