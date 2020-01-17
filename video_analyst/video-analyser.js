@@ -160,7 +160,7 @@ var analyseVideo =   function(filePath, callback) {
 
                 } else {
                    
-                    log && gpsData.length > 0 && console.log(gpsData[0].toString('utf8', 4, 4+7))
+                    //log && gpsData.length > 0 && console.log(gpsData[0].toString('utf8', 4, 4+7))
 
                     if(gpsData.length > 0 && gpsData[0].toString('utf8', 4, 4+7) == 'freeGPS') {
 
@@ -385,8 +385,8 @@ var analyseVideo =   function(filePath, callback) {
                 var stdDevLatActiveOnly = standardDeviation(file.gpsData.filter(function (x) { return x.gpsStatus == 'A' }).map(function (x) { return x.lat }));
                 var stdDevLonActiveOnly = standardDeviation(file.gpsData.filter(function (x) { return x.gpsStatus == 'A' }).map(function (x) { return x.lon }));
                 
-                log && console.log('Standard Deviation Before: ' + pad((stdDevLat+stdDevLon).toFixed(7), 11) + ' ' + pad(stdDevLat.toFixed(7), 11) + ' ' + pad(stdDevLon.toFixed(7), 11));
-                log && console.log('Standard Deviation After:  ' + pad((stdDevLatActiveOnly+stdDevLonActiveOnly).toFixed(7), 11) + ' ' + pad(stdDevLatActiveOnly.toFixed(7), 11) + ' ' + pad(stdDevLonActiveOnly.toFixed(7), 11));
+                //log && console.log('Standard Deviation Before: ' + pad((stdDevLat+stdDevLon).toFixed(7), 11) + ' ' + pad(stdDevLat.toFixed(7), 11) + ' ' + pad(stdDevLon.toFixed(7), 11));
+                //log && console.log('Standard Deviation After:  ' + pad((stdDevLatActiveOnly+stdDevLonActiveOnly).toFixed(7), 11) + ' ' + pad(stdDevLatActiveOnly.toFixed(7), 11) + ' ' + pad(stdDevLonActiveOnly.toFixed(7), 11));
 
                 // Total Distance, also adds distance from last.
                 file.totalDistance = calculateTotalDistance(parsedGpsData);
@@ -419,7 +419,7 @@ var analyseVideo =   function(filePath, callback) {
 
                     var strFrameRate = videoStream.avg_frame_rate.toString();
                     
-                    log && console.log('Read framerate as : "' + strFrameRate + '"');
+                    //log && console.log('Read framerate as : "' + strFrameRate + '"');
 
                     var multiplier = 1;
                     if(strFrameRate.indexOf('/1') > -1) multiplier = 1;
@@ -684,10 +684,10 @@ var readInfoString = function (fd, atoms) {
     // 300
     if(atoms['free'] && Array.isArray(atoms['free']) && atoms['free'].length == 2) {
 
-        log && console.log('Trying 300 Method')
+        //log && console.log('Trying 300 Method')
 
         var free2 = atoms['free'][1];
-        console.dir(atoms['free'])
+        //console.dir(atoms['free'])
 
         var infoBuffer = new Buffer(20);
         fs.readSync(fd, infoBuffer, 0, infoBuffer.length, free2.offset + 36);
@@ -695,7 +695,7 @@ var readInfoString = function (fd, atoms) {
 
     }
 
-    console.log('info string: ' + info);
+    //console.log('info string: ' + info);
 
     return info;
 }
@@ -938,7 +938,7 @@ var findAtoms = function(fd, curPos, end, depth, loopBreaker, print) {
                 }
             }
 
-            (log || print) && console.log('%s\t%s%s \t\t%d', pad(curPos.toString(), 12), pad('', depth, '\t'), atomName, atomSize);
+            //(log || print) && console.log('%s\t%s%s \t\t%d', pad(curPos.toString(), 12), pad('', depth, '\t'), atomName, atomSize);
 
             // We're only intrested in some of the atoms
             if (['ftyp', 'frea', 'moov', 'trak', 'mdia', 'minf', 'stbl', 'udta', 'udat', 'free'].indexOf(atomName) > 0) {
