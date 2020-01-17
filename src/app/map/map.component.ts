@@ -3,7 +3,7 @@
 //https://developers.google.com/maps/documentation/javascript/tutorial
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 declare var google: any; //https://stackoverflow.com/questions/51677452/angular-6-application-cannot-find-namespace-google
 //solve : error TS2304: Cannot find name 'google'
 
@@ -13,7 +13,6 @@ declare var google: any; //https://stackoverflow.com/questions/51677452/angular-
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-
 
 
 
@@ -79,37 +78,39 @@ var request : Object = {
   }
   //ref : https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
    initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: {
-        lat: 35.295962046140126, lng: 138.94373663019877
-      },
-      mapTypeId: 'roadmap',
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {
+          lat: 35.295962046140126, lng: 138.94373663019877
+        },
+        mapTypeId: 'roadmap',
+      });
+    
+      var bikeLaneCoordinates =[ 
+      
+        ]
+      //ref : https://blog.miniasp.com/post/2019/01/20/Angular-HttpClient-Pitfall-and-Tricks
+      this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
+      let response: HttpResponse<any> = res;
+      let status: number = res.status;
+      let statusText: string = res.statusText;
+      let headers: HttpHeaders = res.headers;
+
+      bikeLaneCoordinates = res.body
+      console.log(bikeLaneCoordinates)
+
+      var bikeLanePath = new google.maps.Polyline({
+        path: bikeLaneCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+    
+      bikeLanePath.setMap(map);
     });
-  
-    var bikeLaneCoordinates =[ 
-      { lat: 35.2954754400216, lng: 138.94422327885636 },
-      { lat: 35.29552376734159, lng: 138.9441749473116 },
-      { lat: 35.29559375863261, lng: 138.9441049499019 },
-       ]
 
-       this.http.get('/location')
-       .subscribe((response) => {
-           console.log('response received is ', response);
-       })
-   
-
-
-  
-    var bikeLanePath = new google.maps.Polyline({
-      path: bikeLaneCoordinates,
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
-  
-    bikeLanePath.setMap(map);
+    
 
     
   }
