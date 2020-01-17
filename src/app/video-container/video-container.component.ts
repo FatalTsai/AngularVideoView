@@ -221,12 +221,12 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
         var shouldIgnore = !e.altKey;
         return shouldIgnore;
       },
-   
+   /*
       beforeMouseDown: function(e) {
         // allow mouse-down panning only if altKey is down. Otherwise - ignore
         var shouldIgnore = !e.altKey;
         return shouldIgnore;
-      }
+      }*/
     
       
 

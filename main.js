@@ -1,5 +1,20 @@
+//https://blog.jscrambler.com/implementing-file-upload-using-node-and-angular/
+//https://levelup.gitconnected.com/simple-application-with-angular-6-node-js-express-2873304fff0f
 const { app, BrowserWindow } = require('electron');
 let win;
+const express = require('express')
+
+
+
+ 
+
+
+
+    
+
+
+
+
 function createWindow () {     
 // Create the browser window.
 win = new BrowserWindow({ width: 1920, height: 1080 });

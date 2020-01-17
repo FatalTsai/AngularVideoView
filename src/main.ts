@@ -20,8 +20,5 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   // Otherwise, log the boot error
 }).catch(err => console.error("fuck"+err));
 
-
-
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
-

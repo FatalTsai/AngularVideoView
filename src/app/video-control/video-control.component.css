@@ -21,7 +21,7 @@ button{
 .scrubber {
     color: rgba(255,255,255,.9);
     font-size: 14px;
-    width: 600px;
+    width: 646px;
 }
 .scrubber mat-slider{
     width: 500px;

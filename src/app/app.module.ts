@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { VideoContainerComponent } from './video-container/video-container.component';
 import { MapComponent } from './map/map.component';
+import { FileuploadComponent } from './fileupload/fileupload.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { MapComponent } from './map/map.component';
     VideoControlComponent,
     VideoContainerComponent,
     MapComponent,
+    FileuploadComponent,
     
     
     
