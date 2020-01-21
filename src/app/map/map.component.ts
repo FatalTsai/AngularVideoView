@@ -127,9 +127,7 @@ var request : Object = {
   map = undefined;
   marker = undefined;
   position = [43, -89];
- 
- 
-   initialize() {
+   initialize() { // sliding marker test ref:https://jsfiddle.net/rcravens/RFHKd/2363/
           
       var latlng = new google.maps.LatLng(this.position[0], this.position[1]);
       var myOptions = {
@@ -155,11 +153,9 @@ var request : Object = {
   numDeltas = 100;
   delay = 10; //milliseconds
   i = 0;
-  deltaLat;
-  deltaLng;
   moveMarker(deltaLat,deltaLng){
-    console.log("deltaLat = "+deltaLat)
-    console.log("deltaLng = "+deltaLng)
+    //console.log("deltaLat = "+deltaLat)
+    //console.log("deltaLng = "+deltaLng)
     this.position[0] += deltaLat;
     this.position[1] += deltaLng;
     var latlng = new google.maps.LatLng(this.position[0], this.position[1]);
