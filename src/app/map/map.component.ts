@@ -31,7 +31,8 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     var self=this;
     setTimeout(function () {
-      self.initMap();
+      self.initialize();
+
     }, 1000)
   }
 
@@ -76,45 +77,6 @@ var request : Object = {
 });*/
    
   }
-  //ref : https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
-   initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: {
-          lat: 35.295962046140126, lng: 138.94373663019877
-        },
-        mapTypeId: 'roadmap',
-      });
-    
-      var bikeLaneCoordinates =[ 
-      
-        ]
-      //ref : https://blog.miniasp.com/post/2019/01/20/Angular-HttpClient-Pitfall-and-Tricks
-      this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
-      let response: HttpResponse<any> = res;
-      let status: number = res.status;
-      let statusText: string = res.statusText;
-      let headers: HttpHeaders = res.headers;
-
-      bikeLaneCoordinates = res.body
-      console.log(bikeLaneCoordinates)
-
-      var bikeLanePath = new google.maps.Polyline({
-        path: bikeLaneCoordinates,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-    
-      bikeLanePath.setMap(map);
-    });
-
-    
-
-    
-  }
-
 
   addMarket(pos, map) {
     return new google.maps.Marker({
@@ -122,5 +84,104 @@ var request : Object = {
       map: map,
     });
   }
+  //ref : https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
+   initMap() {
+     
+      //ref : https://blog.miniasp.com/post/2019/01/20/Angular-HttpClient-Pitfall-and-Tricks
+      this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
+        let response: HttpResponse<any> = res;
+        let status: number = res.status;
+        let statusText: string = res.statusText;
+        let headers: HttpHeaders = res.headers;
+
+          
+        const LaneCoordinates = res.body
+        const firstpoint = LaneCoordinates[0]
+        console.log("first = "+JSON.stringify(firstpoint))
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center:firstpoint,
+          mapTypeId: 'roadmap',
+        });
+      
+        
+        var bikeLanePath = new google.maps.Polyline({
+          path: LaneCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+      
+        this.addMarket(map,firstpoint)
+        bikeLanePath.setMap(map);
+    });
+
+    
+
+    
+  }
+
+  map = undefined;
+  marker = undefined;
+  position = [43, -89];
+ 
+ 
+   initialize() {
+          
+      var latlng = new google.maps.LatLng(this.position[0], this.position[1]);
+      var myOptions = {
+          zoom: 8,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      this.map = new google.maps.Map(document.getElementById("map"), myOptions);
+  
+      this.marker = new google.maps.Marker({
+          position: latlng,
+          map: this.map,
+          title: "Your current location!"
+      });
+
+      google.maps.event.addListener(this.map, 'click', function(me) {
+          var result = [me.latLng.lat(), me.latLng.lng()];
+          console.log(me.latLng.lat()+'  '+ me.latLng.lng())
+          this.transition(result);
+      }.bind(this));
+  }
+  
+  numDeltas = 100;
+  delay = 10; //milliseconds
+  i = 0;
+  deltaLat;
+  deltaLng;
+  moveMarker(deltaLat,deltaLng){
+    console.log("deltaLat = "+deltaLat)
+    console.log("deltaLng = "+deltaLng)
+    this.position[0] += deltaLat;
+    this.position[1] += deltaLng;
+    var latlng = new google.maps.LatLng(this.position[0], this.position[1]);
+    this.marker.setPosition(latlng);
+    if(this.i!=this.numDeltas){
+        this.i++;
+  
+        setTimeout(function(){
+          this.moveMarker(deltaLat,deltaLng);
+        }.bind(this), this.delay);
+    }
+}
+  transition(result){
+      this.i = 0;
+      var deltaLat = (result[0] - this.position[0])/this.numDeltas;
+      var deltaLng = (result[1] - this.position[1])/this.numDeltas;
+      this.moveMarker(deltaLat,deltaLng);
+  }
+  
+  
+
+
+ 
 }
 
