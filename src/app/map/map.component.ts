@@ -31,50 +31,64 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     var self=this;
     setTimeout(function () {
-      self.initialize();
+      self.showMap();
 
     }, 1000)
   }
 
-  showMap() {
+  
+
+  rotation =180
+  //marker.seticon example https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html
+  //marker rotation example https://jsfiddle.net/hsf5m9a4/3/
+  setbox(value){
+    this.rotation = value
+    const svg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="46px" height="46px" 
+    viewBox="0 0 46 46" enable-background="new 0 0 46 46" xml:space="preserve">  
+    <g transform="rotate(${this.rotation}, 23, 23)">    
+        <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-186.8672" y1="20.1641" x2="-185.9678" y2="20.1641" gradientTransform="matrix(32.629 0 0 41.951 6105.625 -825.7549)">
+            <stop offset="0"   style="stop-color:#0086CD"/>
+            <stop offset="0.5" style="stop-color:#0086CD"/>
+            <stop offset="0.5" style="stop-color:#0077B7"/>
+            <stop offset="1"   style="stop-color:#0086CD"/>
+        </linearGradient>    
+        <polygon fill="url(#SVGID_1_)" points="23.001,1.241 37.677,38.979 23.001,30.594 8.324,38.979"/>    
+        <path d="M38.556,40l-15.555-8.889L7.445,40L23.001,0L38.556,40z M23.001,2.481L9.204,37.958l13.797-7.884l13.796,7.884 L23.001,2.481z"/>  
+    </g>
+    
+    </svg>`
+
+    this.marker.setIcon(
+      `data:image/svg+xml;charset=utf-8,
+      ${encodeURIComponent(svg)}`//encodes a text string as a valid component of a Uniform Resource Identifier (URI).
+    )
+  }
+
+
+
+
+
+  showMap() { //set rolate icon
     //https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
-    const directionsService = new google.maps.DirectionsService();
+    //const directionsService = new google.maps.DirectionsService();
     const directionsDisplay = new google.maps.DirectionsRenderer();
 
     console.log(this.mapRef.nativeElement);
-    const location = { lat: 25.0723177, lng: 121.574737 }; //it's in Neihu  >///<
-    const bikestore ={lat: 25.0723177, lng: 121.574737 }
     const building101 = { lat: 25.034010, lng: 121.562428 }
     var options = {
-      center: location,
+      center: building101,
       zoom: 15
     }
 
     //ref : https://www.oxxostudio.tw/articles/201810/google-maps-19-directions.html
-    //init map
     const map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.addMarket(map, location);
-
-    directionsDisplay.setMap(map);
-/* 
-//direction service
-//routing setting 
-var request : Object = {
-      origin: { lat: 25.034010, lng: 121.562428 },
-      destination: { lat: 25.037906, lng: 121.549781 },
-      travelMode: 'DRIVING'
-  };
-
-
-  directionsService.route(request, function (result, status) {
-    if (status == 'OK') {
-        // reply the detail of each node in routing 
-        console.log(result.routes[0].legs[0].steps);
-        directionsDisplay.setDirections(result);
-    } else {
-        console.log(status);
-    }
-});*/
+  
+      this.marker = new google.maps.Marker({
+      position: building101,
+      map: map,
+      title: "Your current location!"
+  });
    
   }
 
@@ -85,7 +99,7 @@ var request : Object = {
     });
   }
   //ref : https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
-   initMap() {
+   initMap() {   //can draw polyline from backend data
      
       //ref : https://blog.miniasp.com/post/2019/01/20/Angular-HttpClient-Pitfall-and-Tricks
       this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
@@ -115,7 +129,7 @@ var request : Object = {
           strokeWeight: 2
         });
       
-        this.addMarket(map,firstpoint)
+        //this.addMarket(map,firstpoint)
         bikeLanePath.setMap(map);
     });
 
@@ -126,8 +140,8 @@ var request : Object = {
 
   map = undefined;
   marker = undefined;
-  position = [43, -89];
-   initialize() { // sliding marker test ref:https://jsfiddle.net/rcravens/RFHKd/2363/
+  position = [25, 120];
+  initialize() { // sliding marker test ref:https://jsfiddle.net/rcravens/RFHKd/2363/
           
       var latlng = new google.maps.LatLng(this.position[0], this.position[1]);
       var myOptions = {
@@ -174,6 +188,7 @@ var request : Object = {
       var deltaLng = (result[1] - this.position[1])/this.numDeltas;
       this.moveMarker(deltaLat,deltaLng);
   }
+  
   
   
 
