@@ -532,12 +532,18 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div class="container">
+  <div class="left">
+    <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
+    <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
+    (playstatUpadte)="playstatUpadte($event)" 
+    *ngIf="router.url === '/' "></app-video-control>
+  </div>
 
-<div class="spacer" *ngIf="0"></div>
-<app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
-<app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
-(playstatUpadte)="playstatUpadte($event)" 
-*ngIf="router.url === '/' "></app-video-control>
 
+  <div class="right">
+    <app-map></app-map>
 
+  </div>
+</div>
 <router-outlet *ngIf ="1"></router-outlet>

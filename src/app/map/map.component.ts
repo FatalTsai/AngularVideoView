@@ -40,7 +40,8 @@ export class MapComponent implements OnInit {
 
   rotation = 146
   //marker.seticon example https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html
-  //marker rotation example https://jsfiddle.net/hsf5m9a4/3/
+  //marker rotation and translate string to url example https://jsfiddle.net/hsf5m9a4/3/ 
+  //marker url anchor attibute ref https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html 
   setbox(value){
     this.rotation = value
     const svg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
@@ -58,20 +59,14 @@ export class MapComponent implements OnInit {
     </g>
     
     </svg>`
-    //ref https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html 
+    
     this.marker.setIcon({
       url : `data:image/svg+xml;charset=utf-8,
-      ${encodeURIComponent(svg)}`,
+      ${encodeURIComponent(svg)}`, //encodes a text string as a valid component of a Uniform Resource Identifier (URI).
+
       anchor: new google.maps.Point(13, 13)
 
     })
-
-/*
-    this.marker.setIcon(
-      `data:image/svg+xml;charset=utf-8,
-      ${encodeURIComponent(svg)}`//encodes a text string as a valid component of a Uniform Resource Identifier (URI).
-
-    )*/
   }
 
 
@@ -109,9 +104,6 @@ export class MapComponent implements OnInit {
       this.marker = new google.maps.Marker({
         position: firstpoint,
         map: this.map,
-        icon: {
-          Anchor: [13, 13]         
-      }
     });
 
       //this.addMarket(this.map,firstpoint)

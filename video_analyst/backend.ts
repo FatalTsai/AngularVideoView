@@ -80,17 +80,28 @@ function getdaytime(data) // only reserve lat ,lng ,and daytime
     //console.log(result)
     return result
 }
-/*
-function getfirstpos(data)
+
+function getbearing(data) // only reserve lat ,lng ,and daytime
 {
-    var result : Object={
-        lat : 0,
-        lng :0
-    }
-    result['lat']=data.gpsData[0].lat
-    result['lng']=data.gpsData[0].lon
+    //console.log(data)
+    var result=[] 
+    data.gpsData.forEach(element => {
+      //console.log("lat : "+element.lat)  
+      //console.log("lng : "+element.lon)
+      result.push({
+        datetime:element.datetime,
+        bearing: element.bearing,
+        lat : element.lat,
+        lng : element.lon
+      })
+      
+    })
+
+    //console.log(result)
     return result
-}*/
+}
+
+
 
 
 //needed to use api/... i don't know why..?
@@ -107,6 +118,11 @@ app.get('/api/location', (req, res) => {
 
 app.get('/api/daytime',(req,res) => {
     res.json(getdaytime(gpsData))
+})
+
+
+app.get('/api/bearing',(req,res) => {
+    res.json(getbearing(gpsData))
 })
 
 app.get('/api/fuck', (req, res) => {
