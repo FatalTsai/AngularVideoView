@@ -31,14 +31,14 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     var self=this;
     setTimeout(function () {
-      self.showMap();
+      self.setup();
 
-    }, 1000)
+    }, 300)
   }
 
   
 
-  rotation =180
+  rotation = 146
   //marker.seticon example https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html
   //marker rotation example https://jsfiddle.net/hsf5m9a4/3/
   setbox(value){
@@ -58,14 +58,70 @@ export class MapComponent implements OnInit {
     </g>
     
     </svg>`
+    //ref https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html 
+    this.marker.setIcon({
+      url : `data:image/svg+xml;charset=utf-8,
+      ${encodeURIComponent(svg)}`,
+      anchor: new google.maps.Point(13, 13)
 
+    })
+
+/*
     this.marker.setIcon(
       `data:image/svg+xml;charset=utf-8,
       ${encodeURIComponent(svg)}`//encodes a text string as a valid component of a Uniform Resource Identifier (URI).
-    )
+
+    )*/
   }
 
 
+
+  setup(){
+    this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
+      let response: HttpResponse<any> = res;
+      let status: number = res.status;
+      let statusText: string = res.statusText;
+      let headers: HttpHeaders = res.headers;
+
+        
+      const LaneCoordinates = res.body
+      const firstpoint = LaneCoordinates[0]
+      console.log("first = "+JSON.stringify(firstpoint))
+
+
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center:firstpoint,
+        mapTypeId: 'roadmap',
+      });
+    
+      
+      var landpath = new google.maps.Polyline({
+        path: LaneCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+   
+      //var latlng = new google.maps.LatLng(35.52, 139.56);
+      //console.log("latling = "+JSON.stringify(latlng))
+      this.marker = new google.maps.Marker({
+        position: firstpoint,
+        map: this.map,
+        icon: {
+          Anchor: [13, 13]         
+      }
+    });
+
+      //this.addMarket(this.map,firstpoint)
+      landpath.setMap(this.map);
+
+  });
+
+
+
+}
 
 
 
@@ -128,12 +184,12 @@ export class MapComponent implements OnInit {
           strokeOpacity: 1.0,
           strokeWeight: 2
         });
-      
+        
         //this.addMarket(map,firstpoint)
         bikeLanePath.setMap(map);
     });
 
-    
+   
 
     
   }
