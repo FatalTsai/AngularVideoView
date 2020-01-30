@@ -40,9 +40,15 @@ export class MapComponent implements OnInit {
 
   currentPos
   ngOnChanges(changes :SimpleChanges) {
-    //this.marker.setPosition(this.LaneCoordinates[Math.round(this.playstat['currentTime'])])
-    //this.currentPos = this.LaneCoordinates[Math.round(this.playstat['currentTime'])]
-    //console.log(this.LaneCoordinates)
+    var currentTime = Math.round(this.playstat['currentTimeInt'])
+    if(this.LaneCoordinates === undefined || this.bearing === undefined || this.marker === undefined){
+      return
+    }
+    this.marker.setPosition(this.LaneCoordinates[currentTime])
+    this.currentPos = this.LaneCoordinates[currentTime]
+    this.setbox(this.bearing[currentTime]['bearing'])
+    console.log(this.currentPos)
+    console.log("map receive updated")
   }
 
   rotation = 146
@@ -123,7 +129,6 @@ export class MapComponent implements OnInit {
 
   this.http.get<any>('/api/bearing', { observe: 'response' }).subscribe(res => {
     this.bearing = res.body
-    console.log("bearing = "+this.bearing)
   });
 
 

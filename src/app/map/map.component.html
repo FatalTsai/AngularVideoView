@@ -2,5 +2,5 @@
 <input #box [(value)]="rotation"  (change)="setbox(box.value)" type="number" placeholder="rotation">
 <span>{{rotation}}</span>
 <!-- <span>{{playstat['currentTime']}}</span> -->
-<span>  {{currentPos}}</span>
+<span>  {{this.playstat['currentTimeInt']}}</span>
 <div id="map" #mapRef></div>

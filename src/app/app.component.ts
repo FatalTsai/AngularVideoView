@@ -13,6 +13,7 @@ export class AppComponent {
   playstat  = {
     "isplaying":true,
     "currentTime":0,
+    "currentTimeInt":0,
     "duration":0,
     "LabelcurrentTime": 0,
     "Labelduration":0,
@@ -41,7 +42,7 @@ export class AppComponent {
 
   update(event){
     this.playstatModified = event
-    console.log("playstat = " + JSON.stringify(this.playstat))
+    //console.log("playstat = " + JSON.stringify(this.playstat))
   }
   playstatUpadte(event){
     this.playstat = event

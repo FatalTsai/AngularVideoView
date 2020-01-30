@@ -132,7 +132,7 @@ public onToggle(): void {
   }
 
   ngOnChanges(changes :SimpleChanges) {
-    //console.log("from control")
+    console.log("from control")
     this.timebar.value = this.playstat["currentTime"]
     this.zoombarvalue = this.playstat["zoom"]
 

@@ -39,6 +39,11 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //console.log("ispaused = "+this.player.nativeElement.paused		)
     //console.log("isfullscreen? = "+ (this.player.nativeElement.webkitFullscreenElement ))
     this.playstat["currentTime"] = value.target.currentTime
+    if(this.playstat["currentTimeInt"] != Math.round(value.target.currentTime))
+    {
+        this.PlaystatModified();
+    }
+    this.playstat["currentTimeInt"] = Math.round(value.target.currentTime)
     this.playstat["LabelcurrentTime"] = new Date(1970, 0, 1).setSeconds(value.target.currentTime)
     this.playstat["duration"] = value.target.duration
     this.playstat["Labelduration"] = new Date(1970, 0, 1).setSeconds(value.target.duration)
