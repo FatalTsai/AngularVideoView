@@ -1,7 +1,7 @@
 //https://stackblitz.com/edit/google-maps-api?file=app%2Fgoogle%2Fgoogle.component.ts
 //http://cloverhsc.blogspot.com/2018/07/google-map-api-angular-6-1.html
 //https://developers.google.com/maps/documentation/javascript/tutorial
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject, Input, SimpleChanges } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 declare var google: any; //https://stackoverflow.com/questions/51677452/angular-6-application-cannot-find-namespace-google
@@ -14,6 +14,8 @@ declare var google: any; //https://stackoverflow.com/questions/51677452/angular-
 })
 export class MapComponent implements OnInit {
 
+  @Input() playstatModified : boolean =true;
+  @Input() playstat : object
 
 
   @ViewChild("mapRef",{static : true}) mapRef: ElementRef;
@@ -36,7 +38,12 @@ export class MapComponent implements OnInit {
     }, 300)
   }
 
-  
+  currentPos
+  ngOnChanges(changes :SimpleChanges) {
+    //this.marker.setPosition(this.LaneCoordinates[Math.round(this.playstat['currentTime'])])
+    //this.currentPos = this.LaneCoordinates[Math.round(this.playstat['currentTime'])]
+    //console.log(this.LaneCoordinates)
+  }
 
   rotation = 146
   //marker.seticon example https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html
@@ -68,7 +75,10 @@ export class MapComponent implements OnInit {
 
     })
   }
-
+  bearing : object
+  LaneCoordinates :object
+  map = undefined;
+  marker = undefined;
 
 
   setup(){
@@ -79,8 +89,8 @@ export class MapComponent implements OnInit {
       let headers: HttpHeaders = res.headers;
 
         
-      const LaneCoordinates = res.body
-      const firstpoint = LaneCoordinates[0]
+      this.LaneCoordinates = res.body
+      const firstpoint = this.LaneCoordinates[0]
       console.log("first = "+JSON.stringify(firstpoint))
 
 
@@ -92,7 +102,7 @@ export class MapComponent implements OnInit {
     
       
       var landpath = new google.maps.Polyline({
-        path: LaneCoordinates,
+        path: this.LaneCoordinates,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
@@ -111,11 +121,15 @@ export class MapComponent implements OnInit {
 
   });
 
+  this.http.get<any>('/api/bearing', { observe: 'response' }).subscribe(res => {
+    this.bearing = res.body
+    console.log("bearing = "+this.bearing)
+  });
 
 
 }
 
-
+/*
 
   showMap() { //set rolate icon
     //https://shunnien.github.io/2018/10/04/GoogleMap-draw-line/
@@ -139,7 +153,8 @@ export class MapComponent implements OnInit {
   });
    
   }
-
+*/
+/*
   addMarket(pos, map) {
     return new google.maps.Marker({
       position: pos,
@@ -185,9 +200,9 @@ export class MapComponent implements OnInit {
 
     
   }
+*/
 
-  map = undefined;
-  marker = undefined;
+/*
   position = [25, 120];
   initialize() { // sliding marker test ref:https://jsfiddle.net/rcravens/RFHKd/2363/
           
@@ -237,7 +252,7 @@ export class MapComponent implements OnInit {
       this.moveMarker(deltaLat,deltaLng);
   }
   
-  
+  */
   
 
 
