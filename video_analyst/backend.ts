@@ -6,7 +6,7 @@ const  port  =  1386
 const  multipart  =  require('connect-multiparty');
 const  multipartMiddleware  =  multipart({ uploadDir:  './uploads' });
 const { exec } = require('child_process');
-
+const path =require('path')
 const bodyParser = require("body-parser");
 app.use(bodyParser.json()); //res.json need
 app.use(bodyParser.urlencoded({
@@ -15,21 +15,36 @@ app.use(bodyParser.urlencoded({
 
 const videoanalyser = require('./video-analyser')
 const fs = require('fs')
-const dvr17 = './1D42C600_243830.MP4'
-const dvr19 = './27D3DC00.MP4'
+const dvr17 = './dvr17.MP4'
+const dvr19 = './dvr19.MP4'
+const initFolder = './'
 var mainWindow;
 var gpsData;
 
-var svg = 'data:image/svg+xml;utf8,';
-svg += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="46px" height="46px" viewBox="0 0 46 46" enable-background="new 0 0 46 46" xml:space="preserve">';
-svg += '  <g transform="rotate(' +'' + ', 23, 23)">';
-svg += '    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-186.8672" y1="20.1641" x2="-185.9678" y2="20.1641" gradientTransform="matrix(32.629 0 0 41.951 6105.625 -825.7549)"><stop offset="0"   style="stop-color:#0086CD"/><stop offset="0.5" style="stop-color:#0086CD"/><stop offset="0.5" style="stop-color:#0077B7"/><stop offset="1"   style="stop-color:#0086CD"/></linearGradient>';
-svg += '    <polygon fill="url(#SVGID_1_)" points="23.001,1.241 37.677,38.979 23.001,30.594 8.324,38.979"/>';
-svg += '    <path d="M38.556,40l-15.555-8.889L7.445,40L23.001,0L38.556,40z M23.001,2.481L9.204,37.958l13.797-7.884l13.796,7.884 L23.001,2.481z"/>';
-svg += '  </g>';
-svg += '</svg>';
 
-console.log(svg)
+var mimeNames = {
+    '.css': 'text/css',
+    '.html': 'text/html',
+    '.js': 'application/javascript',
+    '.mp3': 'audio/mpeg',
+    '.mp4': 'video/mp4',
+    '.ogg': 'application/ogg', 
+    '.ogv': 'video/ogg', 
+    '.oga': 'audio/ogg',
+    '.txt': 'text/plain',
+    '.wav': 'audio/x-wav',
+    '.webm': 'video/webm'
+};
+
+function getMimeNameFromExt(ext) {
+    var result = mimeNames[ext.toLowerCase()];
+    
+    // It's better to give a default value.
+    if (result == null)
+        result = 'application/octet-stream';
+    
+    return result;
+}
 
 videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
     if(err)
@@ -101,8 +116,43 @@ function getbearing(data) // only reserve lat ,lng ,and daytime
     return result
 }
 
+function readRangeHeader(range,totalLength) {
+    var array = String(range).split(/bytes=([0-9]*)-([0-9]*)/); //使用正規表示法 切割字串 array == ['',start,end,'']
+    var start = parseInt(array[1]);
+    var end = parseInt(array[2]);
+   
+    var result = {
+        Start: isNaN(start) ? 0 : start,
+        End: isNaN(end) ? (totalLength - 1) : end //如果request.header缺少start 或是 end（isNaN成立）  則將start ,end 設成檔案的頭跟尾
 
+    };
+   
+    if (!isNaN(start) && isNaN(end)) {
+        result.Start = start;
+        result.End = totalLength - 1;
+    }
 
+    if (isNaN(start) && !isNaN(end)) {
+        result.Start = totalLength - end;
+        result.End = totalLength - 1;
+    }
+    
+    return result;
+    
+}
+
+function sendResponse(response, responseStatus, responseHeaders, readable) {
+    response.writeHead(responseStatus, responseHeaders);
+
+    if (readable == null)
+        response.end();
+    else
+        readable.on('open', function () {
+            readable.pipe(response);
+        });
+
+    return null;
+}
 
 //needed to use api/... i don't know why..?
 app.get('/api/raw',(req,res) => {
@@ -124,6 +174,58 @@ app.get('/api/daytime',(req,res) => {
 app.get('/api/bearing',(req,res) => {
     res.json(getbearing(gpsData))
 })
+
+app.get('/api/video/*',(req,res) =>{
+    const lastfilename = req.params['0']
+    const filename =
+    initFolder +lastfilename
+    const stats = fs.statSync(filename) //讀取目標檔案的資訊
+    //console.log("size = "+stats.size)
+    const rangeRequest = readRangeHeader(req.headers['range'], stats.size) 
+    //console.log(rangeRequest)
+    var resHeaders={};
+   
+
+    console.log("filename = "+filename)
+
+    // If 'Range' header exists, we will parse it with Regular Expression.
+    if (rangeRequest == null) {
+        resHeaders['Content-Type'] = getMimeNameFromExt(path.extname(filename));
+        resHeaders['Content-Type'] = mimeNames['.mp4']
+        resHeaders['Content-Length'] = stats.size;  // File size.
+        resHeaders['Accept-Ranges'] = 'bytes';
+
+        //  If not, will return file directly.
+        sendResponse(res, 200, resHeaders, fs.createReadStream(filename));
+        return null;
+    }
+    var start = rangeRequest.Start;
+    var end = rangeRequest.End;
+
+    // If the range can't be fulfilled. 
+    if (start >= stats.size || end >= stats.size) {
+        // Indicate the acceptable range.
+        resHeaders['Content-Range'] = 'bytes */' + stats.size; // File size.
+
+        // Return the 416 'Requested Range Not Satisfiable'.
+        sendResponse(res, 416, resHeaders, null);
+        return null;
+    }
+
+    // Indicate the current range. 
+    resHeaders['Content-Range'] = 'bytes ' + start + '-' + end + '/' + stats.size;
+    resHeaders['Content-Length'] = start == end ? 0 : (end - start + 1);
+    //resHeaders['Content-Type'] = getMimeNameFromExt(path.extname(filename));
+    resHeaders['Content-Type'] = mimeNames['.mp4']
+    resHeaders['Accept-Ranges'] = 'bytes';
+    resHeaders['Cache-Control'] = 'no-cache';
+
+    // Return the 206 'Partial Content'.
+    sendResponse(res, 206, resHeaders, fs.createReadStream(filename, { start: start, end: end }));
+
+})
+
+
 
 app.get('/api/fuck', (req, res) => {
     res.json({
