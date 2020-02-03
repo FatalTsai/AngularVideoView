@@ -37,8 +37,8 @@ export class MapComponent implements OnInit {
 
     }, 1000)
   }
-
-  currentPos
+  originPos
+  nextPos
   ngOnChanges(changes :SimpleChanges) {
     var currentTime = Math.round(this.playstat['currentTimeInt'])
     if(this.LaneCoordinates === undefined || this.bearing === undefined || this.marker === undefined){
@@ -47,21 +47,42 @@ export class MapComponent implements OnInit {
       console.log("marker = "+this.marker)
       return
     }
-    this.currentPos = this.LaneCoordinates[currentTime]
-    if(this.currentPos){
-      this.marker.setPosition(this.currentPos)
-      this.setbox(this.bearing[currentTime]['bearing'])
+    this.originPos = this.nextPos
+    this.nextPos = this.LaneCoordinates[currentTime]
+    if(this.nextPos){
+      //this.marker.setPosition(this.nextPos)
+      this.transition(this.originPos,this.nextPos) 
+      //split the routine into many pieces,letting animate looks more smoothly
+      this.setrotation(this.bearing[currentTime]['bearing'])
 
     }
-    console.log(this.currentPos)
+    console.log(this.nextPos)
     console.log("map receive updated")
   }
+numDeltas = 10;
+
+transition(originPos,nextPos){
+    var deltaLat = (nextPos['lat'] - originPos['lat'] )/this.numDeltas;
+    var deltaLng = (nextPos['lng']  - originPos['lng'] )/this.numDeltas;
+    this.moveMarker(0,originPos,deltaLat,deltaLng);
+}
+moveMarker(value,originPos,deltaLat,deltaLng){
+  originPos['lat'] += deltaLat;
+  originPos['lng'] += deltaLng;
+  console.log("originPos = " + originPos)
+  this.marker.setPosition(originPos);
+  if(value!=this.numDeltas){
+    setTimeout(function () {
+      this.moveMarker(++value,originPos,deltaLat,deltaLng)
+    }.bind(this), 98)
+  }
+}
 
   rotation = 146
   //marker.seticon example https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html
   //marker rotation and translate string to url example https://jsfiddle.net/hsf5m9a4/3/ 
   //marker url anchor attibute ref https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html 
-  setbox(value){
+  setrotation(value){
     if(value === undefined)
     {
       return
@@ -266,8 +287,8 @@ export class MapComponent implements OnInit {
       var deltaLng = (result[1] - this.position[1])/this.numDeltas;
       this.moveMarker(deltaLat,deltaLng);
   }
-  
   */
+  
   
 
 
