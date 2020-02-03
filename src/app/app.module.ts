@@ -13,7 +13,8 @@ import { VideoContainerComponent } from './video-container/video-container.compo
 import { MapComponent } from './map/map.component';
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { ResizableModule } from 'angular-resizable-element';
-import { ResizableDirective } from './resizable.directive'
+import { ResizableDirective } from './resizable.directive';
+import { FilelistComponent } from './filelist/filelist.component'
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ResizableDirective } from './resizable.directive'
     VideoContainerComponent,
     MapComponent,
     FileuploadComponent,
-    ResizableDirective
+    ResizableDirective,
+    FilelistComponent
     
   ],
   imports: [
