@@ -12,6 +12,8 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { VideoContainerComponent } from './video-container/video-container.component';
 import { MapComponent } from './map/map.component';
 import { FileuploadComponent } from './fileupload/fileupload.component';
+import { ResizableModule } from 'angular-resizable-element';
+import { ResizableDirective } from './resizable.directive'
 
 
 @NgModule({
@@ -21,8 +23,7 @@ import { FileuploadComponent } from './fileupload/fileupload.component';
     VideoContainerComponent,
     MapComponent,
     FileuploadComponent,
-    
-    
+    ResizableDirective
     
   ],
   imports: [
@@ -34,7 +35,8 @@ import { FileuploadComponent } from './fileupload/fileupload.component';
     HttpClientModule,
     FormsModule,
     PopupModule,
-    BrowserModule     
+    BrowserModule,
+    ResizableModule     
   ],
   providers: [],
   bootstrap: [AppComponent]

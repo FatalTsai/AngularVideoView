@@ -1,13 +1,21 @@
 
 .container{
     display: flex;
-    flex-flow :row wrap;
+    justify-content:flex-start;
+    flex-direction: row;
 }
-.container.left{
+/*https://stackblitz.com/edit/angular-resizable-nnxzbf?file=app%2Fapp.component.html*/
+/*angular resizable*/
+.left{
+    position: relative;
    
 }
 .right{
+    position: relative;
     width: 50%;
+    height: 500px;
+    flex-grow:0;
+
 }
 
 app-video-control{

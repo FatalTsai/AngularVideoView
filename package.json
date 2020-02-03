@@ -40,6 +40,7 @@
     "@progress/kendo-angular-popup": "^3.0.4",
     "@progress/kendo-theme-default": "latest",
     "@types/google-maps": "^3.2.1",
+    "angular-resizable-element": "^3.3.0",
     "angular-svg-icon": "^8.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",

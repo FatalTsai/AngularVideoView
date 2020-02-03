@@ -2,6 +2,8 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router,ActivatedRoute } from '@angular/router';
+import { ResizeEvent } from 'angular-resizable-element';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,7 +27,6 @@ export class AppComponent {
     "buffering":false,
     "zoom":1
   }
-  test = "test la"   
   playstatModified = true
  
 
