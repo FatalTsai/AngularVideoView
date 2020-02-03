@@ -49,12 +49,20 @@ export class MapComponent implements OnInit {
     }
     this.originPos = this.nextPos
     this.nextPos = this.LaneCoordinates[currentTime]
-    if(this.nextPos){
-      //this.marker.setPosition(this.nextPos)
-      this.transition(this.originPos,this.nextPos) 
+    if(this.nextPos && !this.playstat['buffering']){
+      this.marker.setPosition(this.nextPos)
+      //this.transition(this.originPos,this.nextPos) 
       //split the routine into many pieces,letting animate looks more smoothly
       this.setrotation(this.bearing[currentTime]['bearing'])
 
+    }
+    else if(this.nextPos && this.playstat['buffering'])
+    {
+      this.originPos = this.LaneCoordinates[currentTime]
+      this.nextPos = this.LaneCoordinates[currentTime]
+      console.log("buffering set mark")
+      this.marker.setPosition(this.nextPos)
+      this.setrotation(this.bearing[currentTime]['bearing'])
     }
     console.log(this.nextPos)
     console.log("map receive updated")
@@ -62,11 +70,15 @@ export class MapComponent implements OnInit {
 numDeltas = 10;
 
 transition(originPos,nextPos){
+    if(this.playstat['buffering'])
+      return
     var deltaLat = (nextPos['lat'] - originPos['lat'] )/this.numDeltas;
     var deltaLng = (nextPos['lng']  - originPos['lng'] )/this.numDeltas;
     this.moveMarker(0,originPos,deltaLat,deltaLng);
 }
 moveMarker(value,originPos,deltaLat,deltaLng){
+  if(this.playstat['buffering'])
+    return
   originPos['lat'] += deltaLat;
   originPos['lng'] += deltaLng;
   console.log("originPos = " + originPos)

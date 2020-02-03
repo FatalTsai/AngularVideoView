@@ -45,17 +45,17 @@ function getMimeNameFromExt(ext) {
     
     return result;
 }
-
-videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
-    if(err)
-    {
-        console.error(err)
-        return err
-    }
-    gpsData = result
-    return await result 
-}) 
-
+function analyser(){
+    videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
+        if(err)
+        {
+            console.error(err)
+            return err
+        }
+        gpsData = result
+        return await result 
+    }) 
+}
 
 function getlocation(data) // only reserve lat and lng
 {
@@ -153,6 +153,8 @@ function sendResponse(response, responseStatus, responseHeaders, readable) {
 
     return null;
 }
+analyser();
+
 
 //needed to use api/... i don't know why..?
 app.get('/api/raw',(req,res) => {
