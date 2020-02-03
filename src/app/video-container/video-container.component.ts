@@ -123,19 +123,25 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
     if(this.playstat['isfullscreen'])
     {
-      if (this.player.nativeElement.requestFullscreen) {
+     /* if (this.player.nativeElement.requestFullscreen) {
         console.log("first")
         this.player.nativeElement.requestFullscreen();
-      } else if (this.player.nativeElement.msRequestFullscreen) {
-        console.log("ms")
-        this.player.nativeElement.msRequestFullscreen();
-      } else if (this.player.nativeElement.mozRequestFullScreen) {
-        console.log("moz")
-        this.player.nativeElement.mozRequestFullScreen();
-      } else if (this.player.nativeElement.webkitRequestFullscreen) {
+      } else */
+      //stop using this due to ---> requestfullscreen api can only be initiated by a user gesture
+      
+      if (this.player.nativeElement.webkitRequestFullscreen) {
         console.log("webkit")
         this.player.nativeElement.webkitRequestFullscreen();
       }
+       else if (this.player.nativeElement.mozRequestFullScreen) {
+        console.log("moz")
+        this.player.nativeElement.mozRequestFullScreen();
+      } else if (this.player.nativeElement.msRequestFullscreen) {
+        console.log("ms")
+        this.player.nativeElement.msRequestFullscreen();
+      }
+
+
     }
 
 
@@ -240,7 +246,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     //use method ref : 
     //https://developer.mozilla.org/en-US/docs/Web/API/Element/fullscreenchange_event
     //https://stackoverflow.com/questions/41609937/how-to-bind-event-listener-for-rendered-elements-in-angular-2
-    this.player.nativeElement.addEventListener('fullscreenchange', (event) => {
+    this.player.nativeElement.addEventListener('webkitfullscreenchange', (event) => {
       // document.fullscreenElement will point to the element that
       // is in fullscreen mode if there is one. If not, the value
       // of the property is null.

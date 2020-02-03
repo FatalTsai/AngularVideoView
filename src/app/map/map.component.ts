@@ -35,18 +35,24 @@ export class MapComponent implements OnInit {
     setTimeout(function () {
       self.setup();
 
-    }, 300)
+    }, 1000)
   }
 
   currentPos
   ngOnChanges(changes :SimpleChanges) {
     var currentTime = Math.round(this.playstat['currentTimeInt'])
     if(this.LaneCoordinates === undefined || this.bearing === undefined || this.marker === undefined){
+      console.log("lanecoordinate = "+this.LaneCoordinates)
+      console.log("bearing = "+this.bearing)
+      console.log("marker = "+this.marker)
       return
     }
-    this.marker.setPosition(this.LaneCoordinates[currentTime])
     this.currentPos = this.LaneCoordinates[currentTime]
-    this.setbox(this.bearing[currentTime]['bearing'])
+    if(this.currentPos){
+      this.marker.setPosition(this.currentPos)
+      this.setbox(this.bearing[currentTime]['bearing'])
+
+    }
     console.log(this.currentPos)
     console.log("map receive updated")
   }
@@ -56,6 +62,10 @@ export class MapComponent implements OnInit {
   //marker rotation and translate string to url example https://jsfiddle.net/hsf5m9a4/3/ 
   //marker url anchor attibute ref https://www.oxxostudio.tw/articles/201801/google-maps-6-marker-image.html 
   setbox(value){
+    if(value === undefined)
+    {
+      return
+    }
     this.rotation = value
     const svg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="46px" height="46px" 
@@ -77,7 +87,7 @@ export class MapComponent implements OnInit {
       url : `data:image/svg+xml;charset=utf-8,
       ${encodeURIComponent(svg)}`, //encodes a text string as a valid component of a Uniform Resource Identifier (URI).
 
-      anchor: new google.maps.Point(13, 13)
+      anchor: new google.maps.Point(26, 26)
 
     })
   }

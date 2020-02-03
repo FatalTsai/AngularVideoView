@@ -179,7 +179,7 @@ app.get('/api/video/*',(req,res) =>{
     const lastfilename = req.params['0']
     const filename =
     initFolder +lastfilename
-    const stats = fs.statSync(filename) //讀取目標檔案的資訊
+    const stats = fs.statSync(filename) //read target file's imformation
     //console.log("size = "+stats.size)
     const rangeRequest = readRangeHeader(req.headers['range'], stats.size) 
     //console.log(rangeRequest)
