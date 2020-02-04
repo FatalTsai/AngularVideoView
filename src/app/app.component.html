@@ -533,7 +533,7 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <div class="container">
-  <div class="left" appResizable>
+  <div class="left" appResizable *ngIf="router.url === '/' " >
     <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
     <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
     (playstatUpadte)="playstatUpadte($event)" 
@@ -541,8 +541,8 @@
   </div>
 
 
-  <div class="right" appResizable>
-    <app-map [playstatModified]="playstatModified" [playstat]="playstat" 
+  <div class="right" appResizable *ngIf="router.url === '/' " >
+    <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
      ></app-map>
 
   </div>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MatSliderModule} from '@angular/material/slider';MatIconModule
+import {MatSliderModule} from '@angular/material/slider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VideoControlComponent } from './video-control/video-control.component';
@@ -15,6 +15,7 @@ import { FileuploadComponent } from './fileupload/fileupload.component';
 import { ResizableModule } from 'angular-resizable-element';
 import { ResizableDirective } from './resizable.directive';
 import { FilelistComponent } from './filelist/filelist.component'
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { FilelistComponent } from './filelist/filelist.component'
     FormsModule,
     PopupModule,
     BrowserModule,
-    ResizableModule     
+    ResizableModule,
+    MatListModule     
   ],
   providers: [],
   bootstrap: [AppComponent]
