@@ -1,4 +1,8 @@
 .mat-list-icon {
     color: rgba(0, 0, 0, 0.54);
   }
-  
+
+ /* ref :https://markheath.net/post/css-striped-list*/
+.mat-list-item:nth-of-type(odd){
+    background-color:#e9e9f9;
+}/* way to make zebra striped list*/
