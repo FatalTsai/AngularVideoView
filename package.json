@@ -47,12 +47,14 @@
     "child_process": "^1.0.2",
     "connect-multiparty": "^2.2.0",
     "express": "^4.17.1",
+    "fluent-ffmpeg": "^2.1.2",
     "hammerjs": "^2.0.8",
     "json-mediainfo": "^0.1.0",
     "panzoom": "^8.7.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "video-length": "^2.0.4",
+    "video-snapshot": "^1.0.3",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
