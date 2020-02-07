@@ -1,8 +1,20 @@
+
 .mat-list-icon {
     color: rgba(0, 0, 0, 0.54);
   }
 
  /* ref :https://markheath.net/post/css-striped-list*/
-.mat-list-item:nth-of-type(odd){
+.mat-list-item:nth-of-type(even){
     background-color:#e9e9f9;
 }/* way to make zebra striped list*/
+
+button{
+    border: none;
+    padding: 0;
+    background: none;
+  
+  }
+
+.playlist-toolbar{
+    background-color: #0093e5;
+}

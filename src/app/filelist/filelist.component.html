@@ -1,3 +1,15 @@
+<div class="playlist-toolbar">
+  <button mat-button (click)=zoomout(true)>
+    <mat-icon svgIcon="zoom-out"></mat-icon>
+</button>
+
+
+<button mat-button (click)=zoomout(false)>
+    <mat-icon svgIcon="zoom-in"></mat-icon>
+</button>
+
+</div>
+
 <mat-list>
     <!---- <h3 mat-subheader>Folders</h3> --->
     <mat-list-item *ngFor="let folder of folders">
