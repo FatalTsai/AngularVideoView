@@ -533,18 +533,58 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <div class="container">
-  <div class="left" appResizable *ngIf="router.url === '/' " >
-    <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
-    <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
-    (playstatUpadte)="playstatUpadte($event)" 
-    *ngIf="router.url === '/' " ></app-video-control>
-  </div>
+    <div class="left"  *ngIf="router.url === '/' ">
+      <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
+      <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
+      (playstatUpadte)="playstatUpadte($event)" 
+      *ngIf="router.url === '/' " ></app-video-control>
+    </div>
 
 
-  <div class="right" appResizable *ngIf="router.url === '/' " >
-    <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
-     ></app-map>
+    <div class="right"   *ngIf="router.url === '/' "  >
+      <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
+      ></app-map>
 
-  </div>
+    </div>
+<!--
+https://bertrandg.github.io/angular-split/#/
+
+https://github.com/bertrandg/angular-split/issues/60
+-->
+
 </div>
+
+
+
+
+
+
+<div class="container" style="width: 100%; height: 700px;"  *ngIf="0">
+  <as-split direction="horizontal">
+      <as-split-area>
+        <div class="left"  *ngIf="router.url === '/' " (resized)="onResized($event)" >
+          <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
+          <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
+          (playstatUpadte)="playstatUpadte($event)" 
+          *ngIf="router.url === '/' " ></app-video-control>
+        </div>      
+      </as-split-area>
+
+
+      <as-split-area>
+
+        <div class="right" (resized)="onResized($event)"  *ngIf="router.url === '/' "  >
+          <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
+          ></app-map>
+    
+        </div>   
+
+      </as-split-area>
+    
+  </as-split>
+      
+</div>
+
+
+
 <router-outlet *ngIf ="1"></router-outlet>

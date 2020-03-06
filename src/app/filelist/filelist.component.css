@@ -10,11 +10,18 @@
 
 button{
     border: none;
-    padding: 0;
+    padding: 5px;
     background: none;
-  
+    color: white;
   }
 
 .playlist-toolbar{
     background-color: #0093e5;
+}
+.buttontext{
+  text-align:center;
+  vertical-align: super;
+}
+.mat-list-icon{
+  text-align: center
 }

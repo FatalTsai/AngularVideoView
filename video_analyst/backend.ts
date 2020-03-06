@@ -21,14 +21,15 @@ const dvr19 = './dvr19.MP4'
 const initFolder = './'
 var mainWindow;
 var gpsData;
-var ffmpeg = require('fluent-ffmpeg');
+//var ffmpeg = require('fluent-ffmpeg');
+/*
 //https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
 ffmpeg(dvr17).screenshots({
     // Will take screens at 20%, 40%, 60% and 80% of the video
     count: 4,
     folder: '/path/to/output'
   });
-
+*/
 var mimeNames = {
     '.css': 'text/css',
     '.html': 'text/html',

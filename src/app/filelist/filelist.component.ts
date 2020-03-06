@@ -15,7 +15,11 @@ export interface Section {
 })
 export class FilelistComponent implements OnInit {
     ngOnInit() {
-
+        this.folders.push({
+          name: 'fuck',
+          updated: new Date('8/7/16')
+        })
+        console.log(this.folders)
     }
   folders: Section[] = [
     {
@@ -32,15 +36,24 @@ export class FilelistComponent implements OnInit {
     }
   ];
 
+
+
+
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {
     iconRegistry.addSvgIcon(
       'folder_add',
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/folder_add.svg'));
 
     iconRegistry.addSvgIcon(
-      'zoom-out',
+      'folder-minus',
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/folder_minus.svg'));
  
+    
+    iconRegistry.addSvgIcon(
+      'playlist-save',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/save.svg'));
+ 
     }
+
 
 }

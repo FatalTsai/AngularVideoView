@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router,ActivatedRoute } from '@angular/router';
-import { ResizeEvent } from 'angular-resizable-element';
+import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +48,13 @@ export class AppComponent {
   playstatUpadte(event){
     this.playstat = event
     //console.log("fuck")
+  }
+
+  width: number;
+  height: number;
+  onResized(event: ResizedEvent) {
+    this.width = event.newWidth;
+    this.height = event.newHeight;
   }
   
 }

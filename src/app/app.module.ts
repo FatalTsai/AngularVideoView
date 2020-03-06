@@ -13,10 +13,11 @@ import { VideoContainerComponent } from './video-container/video-container.compo
 import { MapComponent } from './map/map.component';
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { ResizableModule } from 'angular-resizable-element';
-import { ResizableDirective } from './resizable.directive';
 import { FilelistComponent } from './filelist/filelist.component'
 import {MatListModule} from '@angular/material/list';
 
+import { AngularResizedEventModule } from 'angular-resize-event';
+import { AngularSplitModule } from 'angular-split';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,8 @@ import {MatListModule} from '@angular/material/list';
     VideoContainerComponent,
     MapComponent,
     FileuploadComponent,
-    ResizableDirective,
-    FilelistComponent
+    FilelistComponent,
+    
     
   ],
   imports: [
@@ -40,7 +41,10 @@ import {MatListModule} from '@angular/material/list';
     PopupModule,
     BrowserModule,
     ResizableModule,
-    MatListModule     
+    MatListModule,
+    AngularResizedEventModule,
+    AngularSplitModule.forRoot(),
+     
   ],
   providers: [],
   bootstrap: [AppComponent]
