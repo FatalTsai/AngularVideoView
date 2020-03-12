@@ -1,0 +1,46 @@
+
+ListDosDevices V0.2.1 - lists for drive letters A: to Z: the DriveType and kernel name
+Freeware by Uwe Sieber (c) 2008-2012
+
+
+It's a console application. Since Windows NT drive letters are symbolic
+links to kernel objects. Because they where invented for DOS compatibility
+there also called 'DOS Device Names'. Other examples for DOS Device Names
+are COM1, COM2, LPT1, Volume{433619ed-c6ea-11d9-a3b2-806d6172696f},
+PhysicalDrive0, etc.
+Their purpose is to make kernel objects accessible in the Win32 namespace.
+Get SysInternals WinOBJ to see them in a GUI.
+http://technet.microsoft.com/en-en/sysinternals/bb896657.aspx
+
+
+
+Usage:
+
+ListDosDevices [-a]
+
+-a makes it show all DOS Device Names. A long list...
+
+
+
+Works under Windows 2000, XP and higher only.
+
+
+
+
+
+Licence
+
+
+ListDosDevices is Freeware.
+
+Allowed:
+- usage in any environment, including commercial
+- include in software products, including commercial
+- include on CD/DVD of computer magazines
+
+Not allowed:
+- changing any of the files
+
+
+
+
