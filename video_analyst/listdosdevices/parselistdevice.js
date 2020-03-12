@@ -31,7 +31,7 @@ Z:  ----`
 
 //https://stackoverflow.com/questions/3410464/how-to-find-indices-of-all-occurrences-of-one-string-in-another-in-javascript
 var searchall =function(str,regex){
-    console.log(raw)
+    //console.log(raw)
     //var str = "I learned to play the Ukulele in Lebanon."
     //var regex = /le/gi, 
     var result, indices = [];

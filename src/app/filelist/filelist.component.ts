@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 export interface Section {
   name: string;
@@ -20,26 +21,25 @@ export class FilelistComponent implements OnInit {
           updated: new Date('8/7/16')
         })
         console.log(this.folders)
+
+        this.http.get<any>('/api/usb', { observe: 'response' }).subscribe(res => {
+          res.body.forEach(element => {
+            this.folders.push({
+              name: element,
+              updated: new Date('8/7/16')
+            })
+          });
+        });
+
     }
   folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    }
+    
   ];
 
 
 
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public router:Router,private http :HttpClient) {
     iconRegistry.addSvgIcon(
       'folder_add',
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/folder_add.svg'));

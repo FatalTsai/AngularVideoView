@@ -281,16 +281,44 @@ function execShellCommand(cmd) {
 app.get('/api/usb', (req, res) => {
     //res.send('fuck')
     (async function () {  
-
-    res.send(await visitor(`G:/`))
-
+      
+        res.send(await inusedisk())
+        //res.send(await visitor('G:/'))
     })();
 });
 
+async function inusedisk(){
+    let arr1 = [1,2,3,4,5]
+    let arr2 = [2,4,6,8,10]
+
+    let result = arr1.concat(arr2.filter((e)=>{
+        return arr1.indexOf(e) === -1
+    }))
+
+    console.log(result) // [1, 2, 3, 4, 5, 6, 8, 10]
+
+
+
+    var retg = (await visitor('G:/')) 
+    console.log(retg)
+
+    var retf= (await visitor('F:/')) 
+    var copy = retg.concat(retf);
+
+    return await copy
+}
+
 async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
     var videofile=[]
-    var files = fs.readdirSync(node); 
-    console.log(`files = ${files}`)
+    try {
+        var files = fs.readdirSync(node); 
+    } catch (err) {
+        // Here you get the error when the file was not found,
+        // but you also get any other error
+        files = err
+        return files
+      }
+    //console.log(`files = ${files}`)
     files.forEach(async function (filename) {
       var childnode = path.join(node,filename);
       var stats = fs.statSync(childnode);
@@ -298,14 +326,16 @@ async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找�
       { 
         var childnodefile = await visitor(childnode)
         //videofile.push(childnodefile) //<--- use this to become nested form
+       
         childnodefile.forEach(element => {
-            videofile.push(element)
+            if(path.extname(element) == '.mp4' || path.extname(element) == '.MP4')           
+                videofile.push(element)
         });
       }
       else
       {
-        
-        videofile.push(childnode)
+        if(path.extname(childnode) == '.mp4' || path.extname(childnode) == '.MP4')           
+            videofile.push(childnode)
         
       
     }

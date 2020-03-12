@@ -5,19 +5,23 @@ var list = require('./listdosdevices/parselistdevice.js')
 console.log(usb.getDeviceList())
 
 usb.on('attach', function(device) { 
-    execShellCommand2(`.\\listdosdevices\\ListDOSdevices.exe`)
     console.log(device)
+    setTimeout(function () {
+        execShellCommand(`.\\listdosdevices\\ListDOSdevices.exe`)
+      }, 250)
 });
 
 usb.on('detach', function(device) { 
-    execShellCommand2(`.\\listdosdevices\\ListDOSdevices.exe`)
     console.log(device)
+    setTimeout(function () {
+        execShellCommand(`.\\listdosdevices\\ListDOSdevices.exe`)
+      }, 250)
 
 });
 //https://docs.microsoft.com/zh-tw/windows-server/storage/disk-management/assign-a-mount-point-folder-path-to-a-drive
 
 
-function execShellCommand2(cmd) {
+function execShellCommand(cmd) {
     const exec = require('child_process').exec;
     return new Promise((resolve, reject) => {
         exec(cmd, (error, stdout, stderr) => {
