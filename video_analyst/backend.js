@@ -277,6 +277,44 @@ function execShellCommand(cmd) {
 
 })();
 
+
+app.get('/api/usb', (req, res) => {
+    //res.send('fuck')
+    (async function () {  
+
+    res.send(await visitor(`G:/`))
+
+    })();
+});
+
+async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
+    var videofile=[]
+    var files = fs.readdirSync(node); 
+    console.log(`files = ${files}`)
+    files.forEach(async function (filename) {
+      var childnode = path.join(node,filename);
+      var stats = fs.statSync(childnode);
+      if (stats.isDirectory())  //如果是子目錄 繼續拜訪
+      { 
+        var childnodefile = await visitor(childnode)
+        //videofile.push(childnodefile) //<--- use this to become nested form
+        childnodefile.forEach(element => {
+            videofile.push(element)
+        });
+      }
+      else
+      {
+        
+        videofile.push(childnode)
+        
+      
+    }
+    });
+
+    return await videofile
+
+}
+
 app.listen(port, () => console.log(`backend listening on port ${port}!`))
 
 
