@@ -18,6 +18,9 @@ import {MatListModule} from '@angular/material/list';
 
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { AngularSplitModule } from 'angular-split';
+import { ChatService } from 'src/chat.service';
+import { SocketryComponent } from './socketry/socketry.component';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { AngularSplitModule } from 'angular-split';
     MapComponent,
     FileuploadComponent,
     FilelistComponent,
+    SocketryComponent
     
     
   ],
@@ -46,7 +50,7 @@ import { AngularSplitModule } from 'angular-split';
     AngularSplitModule.forRoot(),
      
   ],
-  providers: [],
+  providers: [ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

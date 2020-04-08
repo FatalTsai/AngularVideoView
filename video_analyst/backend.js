@@ -288,19 +288,10 @@ app.get('/api/usb', (req, res) => {
 });
 
 async function inusedisk(){
-    let arr1 = [1,2,3,4,5]
-    let arr2 = [2,4,6,8,10]
 
-    let result = arr1.concat(arr2.filter((e)=>{
-        return arr1.indexOf(e) === -1
-    }))
-
-    console.log(result) // [1, 2, 3, 4, 5, 6, 8, 10]
-
-
-
-    var retg = (await visitor('G:/')) 
-    console.log(retg)
+    var retg = ''
+    //var retg = (await visitor('G:/')) 
+    //console.log(retg)
 
     var retf= (await visitor('F:/')) 
     var copy = retg.concat(retf);
@@ -335,9 +326,7 @@ async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找�
       else
       {
         if(path.extname(childnode) == '.mp4' || path.extname(childnode) == '.MP4')           
-            videofile.push(childnode)
-        
-      
+            videofile.push(childnode)      
     }
     });
 

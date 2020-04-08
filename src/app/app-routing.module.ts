@@ -6,6 +6,7 @@ import { VideoContainerComponent } from './video-container/video-container.compo
 import { MapComponent } from './map/map.component';
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { FilelistComponent } from './filelist/filelist.component';
+import { SocketryComponent } from './socketry/socketry.component';
 
 
 
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'video-container',component :VideoContainerComponent},
   {path: 'map',component :MapComponent},
   {path :'fileupload',component:FileuploadComponent},
-  {path : 'filelist',component:FilelistComponent}
+  {path : 'filelist',component:FilelistComponent},
+  {path : 'socketry',component:SocketryComponent}
 ];
 
 @NgModule({
