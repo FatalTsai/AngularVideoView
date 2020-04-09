@@ -3,7 +3,9 @@
 //https://levelup.gitconnected.com/simple-application-with-angular-6-node-js-express-2873304fff0f
 const  express  =  require('express')
 const  app  =  express()
-const  port  =  1386
+const port = process.env.PORT || 1386;
+let http = require('http');
+let server = http.Server(app);
 const  multipart  =  require('connect-multiparty');
 const  multipartMiddleware  =  multipart({ uploadDir:  './uploads' });
 const { exec } = require('child_process');
@@ -281,15 +283,24 @@ function execShellCommand(cmd) {
 app.get('/api/usb', (req, res) => {
     //res.send('fuck')
     (async function () {  
-      
-        res.send(await inusedisk())
+        var raw=JSON.parse(fs.readFileSync(`./listdosdevices/mountusb.json`))
+        var plugin = raw.now
+        res.send(await inusedisk(plugin))
         //res.send(await visitor('G:/'))
     })();
 });
 
-async function inusedisk(){
+async function inusedisk(plugin){
 
-    var retg = ''
+    var result= []
+    for(var i=0;i<plugin.length;i++){
+        console.log('fuck fuck fukc')
+        var tmp = ( await visitor(plugin[i]+':/') )
+        result = result.concat(tmp)
+        console.log(result)
+    }
+/*
+    var retg = []
     //var retg = (await visitor('G:/')) 
     //console.log(retg)
 
@@ -297,6 +308,9 @@ async function inusedisk(){
     var copy = retg.concat(retf);
 
     return await copy
+
+*/
+    return await result
 }
 
 async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
@@ -334,6 +348,65 @@ async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找�
 
 }
 
-app.listen(port, () => console.log(`backend listening on port ${port}!`))
+
+let socketIO = require('socket.io');
+let io = socketIO(server);
+
+
+io.on('connection', (socket) => {
+    console.log('user connected');
+
+    socket.on('new-message', (message) => {
+        io.emit('new-message', message+' fuck');
+    });
+});
+
+var usb = require('usb')
+var list = require('./listdosdevices/parselistdevice.js')
+
+console.log(usb.getDeviceList())
+
+setTimeout(function () {
+    execShellCommand(`.\\listdosdevices\\ListDOSdevices.exe`)
+  }, 250)
+
+
+usb.on('attach', function(device) { 
+    console.log(device)
+    setTimeout(function () {
+        execShellCommand(`.\\listdosdevices\\ListDOSdevices.exe`)
+      }, 250)
+});
+
+usb.on('detach', function(device) { 
+    console.log(device)
+    setTimeout(function () {
+        execShellCommand(`.\\listdosdevices\\ListDOSdevices.exe`)
+      }, 250)
+
+});
+//https://docs.microsoft.com/zh-tw/windows-server/storage/disk-management/assign-a-mount-point-folder-path-to-a-drive
+
+
+function execShellCommand(cmd) {
+    const exec = require('child_process').exec;
+    return new Promise((resolve, reject) => {
+        exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+        console.warn(error);
+        }
+        if(stdout)
+        {             
+            console.log(stdout)
+            io.emit( 'new-message',JSON.stringify(list.update(stdout)) )
+        }
+        
+        resolve(stdout? stdout : stderr);
+        //resolve(stdout? input +': pwd found!!!' :input+': not this one')
+        });
+    });
+    }
+
+server.listen(port, () => console.log(`backend listening on port ${port}!`))
 
 

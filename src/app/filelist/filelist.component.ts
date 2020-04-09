@@ -16,10 +16,7 @@ export interface Section {
 })
 export class FilelistComponent implements OnInit {
     ngOnInit() {
-        this.folders.push({
-          name: 'fuck',
-          updated: new Date('8/7/16')
-        })
+    
         console.log(this.folders)
 
         this.http.get<any>('/api/usb', { observe: 'response' }).subscribe(res => {

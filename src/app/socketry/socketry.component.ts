@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 import { ChatService } from 'src/chat.service';
-
+import { throttleTime,scan,skipWhile,filter,distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-socketry',
@@ -24,8 +24,13 @@ export class SocketryComponent implements OnInit {
       this.message = '';
     }
 
-  ngOnInit() {
- 
-  }
-
+    ngOnInit() {
+      this.chatService
+        .getMessages()
+        .subscribe((message: string) => {
+          const currentTime = moment().format('hh:mm:ss a');
+          const messageWithTimestamp = `${currentTime}: ${message}`;
+          this.messages.push(messageWithTimestamp);
+        });
+    }
 }
