@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+const mediainfo = require('node-mediainfo');
 const videoanalyser = require('./video-analyser')
 const fs = require('fs')
 const dvr17 = './dvr17.MP4'
@@ -285,7 +286,15 @@ app.get('/api/usb', (req, res) => {
     (async function () {  
         var raw=JSON.parse(fs.readFileSync(`./listdosdevices/mountusb.json`))
         var plugin = raw.now
-        res.send(await inusedisk(plugin))
+        var filename = await inusedisk(plugin)
+
+        var timeinfo =[]
+        for(var i=0;i<filename.length;i++)
+            timeinfo.push(await getmediatime(filename[i]))
+
+        res.send([filename, timeinfo])
+
+        //res.send(await inusedisk(plugin))
         //res.send(await visitor('G:/'))
     })();
 });
@@ -294,10 +303,9 @@ async function inusedisk(plugin){
 
     var result= []
     for(var i=0;i<plugin.length;i++){
-        console.log('fuck fuck fukc')
         var tmp = ( await visitor(plugin[i]+':/') )
         result = result.concat(tmp)
-        console.log(result)
+        //console.log(result)
     }
 /*
     var retg = []
@@ -309,14 +317,28 @@ async function inusedisk(plugin){
 
     return await copy
 
-*/
+*/  
+
     return await result
+}
+async function getmediatime(path)
+{
+    
+    var dateinfo= await mediainfo(path)
+    var result = JSON.stringify(dateinfo.media.track[0].Encoded_Date)
+    console.log(result)
+    result = result.replace(/(")/g,'')
+    result = result.replace(/(\\)/g,'')
+
+    return String(result)
 }
 
 async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
     var videofile=[]
+
     try {
-        var files = fs.readdirSync(node); 
+        var files = fs.readdirSync(node);
+        console.log('files = '+files) 
     } catch (err) {
         // Here you get the error when the file was not found,
         // but you also get any other error
@@ -327,23 +349,30 @@ async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找�
     files.forEach(async function (filename) {
       var childnode = path.join(node,filename);
       var stats = fs.statSync(childnode);
+      
       if (stats.isDirectory())  //如果是子目錄 繼續拜訪
       { 
         var childnodefile = await visitor(childnode)
         //videofile.push(childnodefile) //<--- use this to become nested form
        
         childnodefile.forEach(element => {
-            if(path.extname(element) == '.mp4' || path.extname(element) == '.MP4')           
+            if(path.extname(element) == '.mp4' || path.extname(element) == '.MP4')
                 videofile.push(element)
-        });
+
+                //console.log(element)   
+                //var tmp = new cell(element,'8/7/16')      
+                //videofile.push(tmp)
+        });                
       }
       else
       {
         if(path.extname(childnode) == '.mp4' || path.extname(childnode) == '.MP4')           
             videofile.push(childnode)      
+            //console.log(childnode)
+            //var tmp = new cell(childnode,'8/7/16')      
+           // videofile.push(tmp)
     }
     });
-
     return await videofile
 
 }

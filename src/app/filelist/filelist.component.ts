@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
 
 export interface Section {
   name: string;
@@ -20,12 +21,18 @@ export class FilelistComponent implements OnInit {
         console.log(this.folders)
 
         this.http.get<any>('/api/usb', { observe: 'response' }).subscribe(res => {
-          res.body.forEach(element => {
+          var name = res.body[0]
+          var time = res.body[1]
+
+          name.forEach(function(element,index){
             this.folders.push({
-              name: element,
-              updated: new Date('8/7/16')
+              name:element,
+              updated: new Date(time[index])
             })
-          });
+          }.bind(this));
+
+         console.log(this.folders)
+          
         });
 
     }
