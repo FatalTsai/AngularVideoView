@@ -332,6 +332,17 @@ async function getmediatime(path)
 
     return String(result)
 }
+async function getmediaduration(path)
+{
+    
+    var dateinfo= await mediainfo(path)
+    var result = JSON.stringify(dateinfo.media.track[0].Duration)
+    console.log(result)
+    result = result.replace(/(")/g,'')
+    result = result.replace(/(\\)/g,'')
+
+    return String(result)
+}
 
 async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
     var videofile=[]
@@ -436,6 +447,37 @@ function execShellCommand(cmd) {
     });
     }
 
+
 server.listen(port, () => console.log(`backend listening on port ${port}!`))
 
 
+
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+var ffmpeg = require('fluent-ffmpeg');
+
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+// console.log(ffmpegInstaller.path, ffmpegInstaller.version);
+
+module.exports = ffmpeg;
+
+
+/*
+ffmpeg('F:\dvr19.MP4')
+  .takeScreenshots({
+      count: 10,
+      timemarks: [ '600' ] // number of seconds
+    }, './', function(err) {
+    console.log('screenshots were saved')
+  });
+*/
+  
+
+getmediaduration('F:\dvr19.MP4')
+ ffmpeg('F:\dvr19.MP4')
+          .screenshots({
+            timestamps: [Number( await getmediaduration('F:\dvr19.MP4')/2)],
+            filename: 'fuck_%s.png',
+            folder: './'
+          }).on('end', function() {
+            console.log('done');
+          });
