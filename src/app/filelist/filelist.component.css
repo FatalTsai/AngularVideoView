@@ -25,3 +25,15 @@ button{
 .mat-list-icon{
   text-align: center
 }
+mat-list{
+  padding-top: 0px;
+}
+
+img{
+  border-radius : 0% !important;
+  max-width: 92% !important;
+	max-height: 92% !important;
+  width: inherit !important;
+  height: inherit !important;
+
+}

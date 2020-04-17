@@ -21,7 +21,6 @@ const videoanalyser = require('./video-analyser')
 const fs = require('fs')
 const dvr17 = './dvr17.MP4'
 const dvr19 = './dvr19.MP4'
-const initFolder = './'
 var mainWindow;
 var gpsData;
 //var ffmpeg = require('fluent-ffmpeg');
@@ -44,7 +43,8 @@ var mimeNames = {
     '.oga': 'audio/ogg',
     '.txt': 'text/plain',
     '.wav': 'audio/x-wav',
-    '.webm': 'video/webm'
+    '.webm': 'video/webm',
+    '.png':'image/png'
 };
 
 function getMimeNameFromExt(ext) {
@@ -188,10 +188,12 @@ app.get('/api/bearing',(req,res) => {
     res.json(getbearing(gpsData))
 })
 
+const initFolder = './'
+
 app.get('/api/video/*',(req,res) =>{
-    const lastfilename = req.params['0']
-    const filename =
-    initFolder +lastfilename
+    const lastfilename = filename_parse(req.params['0'])
+    const filename = lastfilename
+    //const filename =initFolder +lastfilename
     const stats = fs.statSync(filename) //read target file's imformation
     //console.log("size = "+stats.size)
     const rangeRequest = readRangeHeader(req.headers['range'], stats.size) 
@@ -257,6 +259,21 @@ app.get('/api/dir', (req, res) => {
 
 });
 
+app.get('/api/photo/*', (req, res) => {
+
+    const lastfilename = req.params['0']
+    //stream = fs.createReadStream('./thumb/dvr17.MP4.png')
+    const stats = fs.statSync('./thumb/'+lastfilename) //read target file's imformation
+
+    stream = fs.createReadStream('./thumb/'+lastfilename)
+    console.log(stream)
+    res.set({
+    'Context-Type' :mimeNames['.png'], 
+    })
+    stream.pipe(res) 
+
+})
+
 function execShellCommand(cmd) {
     const exec = require('child_process').exec;
     return new Promise((resolve, reject) => {
@@ -289,9 +306,10 @@ app.get('/api/usb', (req, res) => {
         var filename = await inusedisk(plugin)
 
         var timeinfo =[]
-        for(var i=0;i<filename.length;i++)
+        for(var i=0;i<filename.length;i++){
             timeinfo.push(await getmediatime(filename[i]))
-
+            shots(filename[i])
+        }
         res.send([filename, timeinfo])
 
         //res.send(await inusedisk(plugin))
@@ -343,6 +361,49 @@ async function getmediaduration(path)
 
     return String(result)
 }
+var shots=async function(pos){
+    console.log(await getmediaduration(pos))
+    console.log(pos)
+    var filename = filename_encode(pos)+'.png'
+    console.log(filename)
+    ffmpeg(pos)
+            .screenshots({
+                timestamps: [await getmediaduration(pos)/2],
+                filename: filename,
+                folder: './thumb/'
+            }).on('end', function() {
+                console.log('done');
+            });
+
+}
+// : ---> _8778fuck_
+// / ---> _8777bitch_
+// \ ---> _8877pussy_
+
+var filename_encode = function(pos)
+{
+    pos=String(pos)
+    /*
+    pos = pos.replace(/(%8778fuck%)/g,':')
+    pos = pos.replace(/(%8777bitch%)/g,'/')
+    */
+   pos = pos.replace(/(:)/g,'_8778fuck_')
+   pos = pos.replace(/(\/)/g,'_8777bitch_')
+   pos = pos.replace(/(\\)/g,'_8877pussy_')
+
+    return pos
+}
+var filename_parse = function(pos)
+{
+    pos=String(pos)
+    pos = pos.replace(/(_8778fuck_)/g,':')
+    pos = pos.replace(/(_8777bitch_)/g,'/')
+    pos = pos.replace(/(_8877pussy_)/g,'\\')
+
+    return pos
+}
+
+
 
 async function visitor(node) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
     var videofile=[]
@@ -472,12 +533,5 @@ ffmpeg('F:\dvr19.MP4')
 */
   
 
-getmediaduration('F:\dvr19.MP4')
- ffmpeg('F:\dvr19.MP4')
-          .screenshots({
-            timestamps: [Number( await getmediaduration('F:\dvr19.MP4')/2)],
-            filename: 'fuck_%s.png',
-            folder: './'
-          }).on('end', function() {
-            console.log('done');
-          });
+
+shots('F:\dvr17.MP4')

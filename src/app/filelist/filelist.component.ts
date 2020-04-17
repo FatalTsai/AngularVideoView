@@ -10,6 +10,7 @@ import * as moment from 'moment';
 export interface Section {
   name: string;
   updated: Date;
+  thumbnail : string
 }
 
 @Component({
@@ -23,6 +24,7 @@ export class FilelistComponent implements OnInit {
   messages: string[] = [];
   secretCode: string;
   disk_plugins :object
+  server_url ='http://localhost:1386/api/photo/'
   ngOnInit() {
   
       this.fetchfilelist()
@@ -71,15 +73,15 @@ export class FilelistComponent implements OnInit {
 
   fetchfilelist(){
     this.folders = [  ];
-
+  
     this.http.get<any>('/api/usb', { observe: 'response' }).subscribe(res => {
       var name = res.body[0]
       var time = res.body[1]
-
       name.forEach(function(element,index){
         this.folders.push({
           name:element,
-          updated: new Date(time[index])
+          updated: new Date(time[index]),
+          img : this.server_url+this.filename_parse(element)+'.png'
         })
       }.bind(this));
 
@@ -87,4 +89,25 @@ export class FilelistComponent implements OnInit {
       
     });
   }
+
+  // : ---> _8778fuck_
+  // / ---> _8777bitch_
+  // \ ---> _8877pussy_
+
+  filename_parse(pos)
+  {
+    pos=String(pos)
+/*     
+    pos = pos.replace(/(_8778fuck_)/g,':')
+    pos = pos.replace(/(_8777bitch_)/g,'/')
+    pos = pos.replace(/(_8877pussy_)/g,'\\')
+*/
+    pos = pos.replace(/(:)/g,'_8778fuck_')
+    pos = pos.replace(/(\/)/g,'_8777bitch_')
+    pos = pos.replace(/(\\)/g,'_8877pussy_')
+
+
+      return pos
+  }
+
 }
