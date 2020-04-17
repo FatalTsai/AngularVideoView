@@ -20,6 +20,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
 import { AngularSplitModule } from 'angular-split';
 import { ChatService } from 'src/chat.service';
 import { SocketryComponent } from './socketry/socketry.component';
+import { CommonSvc } from './common.svc';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import { SocketryComponent } from './socketry/socketry.component';
     AngularSplitModule.forRoot(),
      
   ],
-  providers: [ChatService],
+  providers: [ChatService,CommonSvc],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

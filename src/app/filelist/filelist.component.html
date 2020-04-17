@@ -21,7 +21,7 @@
 
 <mat-list>
     <!---- <h3 mat-subheader>Folders</h3> --->
-    <mat-list-item *ngFor="let folder of folders">
+    <mat-list-item *ngFor="let folder of folders" (click)="selectvideo(folder)">
       <img matListAvatar src="{{folder.img}}">
       <mat-icon mat-list-icon *ngIf="0" >folder</mat-icon>
       <h4 mat-line> {{folder.updated | date}} </h4>

@@ -545,6 +545,10 @@
       <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
       ></app-map>
 
+      <app-filelist  *ngIf="router.url === '/' ">
+
+      </app-filelist>
+
     </div>
 <!--
 https://bertrandg.github.io/angular-split/#/
@@ -576,7 +580,7 @@ https://github.com/bertrandg/angular-split/issues/60
         <div class="right" (resized)="onResized($event)"  *ngIf="router.url === '/' "  >
           <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
           ></app-map>
-    
+      
         </div>   
 
       </as-split-area>

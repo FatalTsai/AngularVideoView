@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ChatService } from 'src/chat.service';
 import * as moment from 'moment';
+import { CommonSvc } from '../common.svc';
 
 export interface Section {
   name: string;
@@ -50,7 +51,9 @@ export class FilelistComponent implements OnInit {
     sanitizer: DomSanitizer, 
     public router:Router,
     private http :HttpClient,
-    private chatService :ChatService) {
+    private chatService :ChatService,
+    private svc :CommonSvc
+    ) {
     iconRegistry.addSvgIcon(
       'folder_add',
       sanitizer.bypassSecurityTrustResourceUrl('assets/video-control/folder_add.svg'));
@@ -73,20 +76,20 @@ export class FilelistComponent implements OnInit {
 
   fetchfilelist(){
     this.folders = [  ];
-  
+    var tmpfolders=[]
     this.http.get<any>('/api/usb', { observe: 'response' }).subscribe(res => {
       var name = res.body[0]
       var time = res.body[1]
       name.forEach(function(element,index){
-        this.folders.push({
+       tmpfolders.push({
           name:element,
           updated: new Date(time[index]),
           img : this.server_url+this.filename_parse(element)+'.png'
         })
       }.bind(this));
 
-      console.log(this.folders)
-      
+      console.log(tmpfolders)
+      this.folders = tmpfolders
     });
   }
 
@@ -108,6 +111,12 @@ export class FilelistComponent implements OnInit {
 
 
       return pos
+  }
+
+  selectvideo(val)
+  {
+    console.log(val.name)
+    this.svc.videoselct(val.name)
   }
 
 }

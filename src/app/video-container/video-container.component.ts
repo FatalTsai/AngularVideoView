@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { tick } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import panzoom from "panzoom";
+import { CommonSvc } from '../common.svc';
 
 @Component({
   selector: 'app-video-container',
@@ -27,7 +28,15 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer,private svc: CommonSvc) {
+    this.svc.mySub.subscribe(
+      (val) =>{
+        console.log(val)
+      }
+    )
+
+
+  }
   public getSantizeUrl(url : string) {
       return this.sanitizer.bypassSecurityTrustUrl(url);
   }
