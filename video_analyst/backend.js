@@ -56,21 +56,28 @@ function getMimeNameFromExt(ext) {
     
     return result;
 }
-function analyser(){
-    videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
+async function analyser(){
+    var tmp = 'fuck'
+    tmp =  await videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
         if(err)
         {
             console.error(err)
             return err
         }
         gpsData = result
-        return await result 
+        tmp  = result
+        console.log('in callback func: tmp='+tmp+' err='+err)
     }) 
+    setTimeout(() => {
+        console.log('tmp in setimeout '+tmp)
+        //return tmp 
+        return 'fuck'
+    }, 2000);
 }
 
 function getlocation(data) // only reserve lat and lng
 {
-    //console.log(data)
+    console.log('In func getlocation : '+data)
     var result=[] 
     data.gpsData.forEach(element => {
       //console.log("lat : "+element.lat)  
@@ -164,7 +171,6 @@ function sendResponse(response, responseStatus, responseHeaders, readable) {
 
     return null;
 }
-analyser();
 
 
 //needed to use api/... i don't know why..?
@@ -174,9 +180,30 @@ app.get('/api/raw',(req,res) => {
 
 
 app.get('/api/location', (req, res) => {
-    res.json(getlocation(gpsData));
+    videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
+        if(err)
+        {
+            console.error(err)
+            return err
+        }
+        //gpsData = result
+        res.json(getlocation(result))
+    })
+   
+   
 });
-
+app.get('/api/location/*', (req, res) => {
+    var filepath = filename_parse(req.params['0'])
+    videoanalyser.default.analyseVideo(filepath, function(err,result){          
+        if(err)
+        {
+            console.error(err)
+            return err
+        }
+        //gpsData = result
+        res.json(getlocation(result))
+    })
+});
 
 
 app.get('/api/daytime',(req,res) => {
@@ -185,8 +212,36 @@ app.get('/api/daytime',(req,res) => {
 
 
 app.get('/api/bearing',(req,res) => {
-    res.json(getbearing(gpsData))
+
+    //var filepath = filename_parse(req.params['0'])
+    videoanalyser.default.analyseVideo(dvr17, function(err,result){          
+        if(err)
+        {
+            console.error(err)
+            return err
+        }
+        //gpsData = result
+        res.json(getbearing(result))
+    })
+
 })
+
+app.get('/api/bearing/*',(req,res) => {
+
+    var filepath = filename_parse(req.params['0'])
+    videoanalyser.default.analyseVideo(filepath, function(err,result){          
+        if(err)
+        {
+            console.error(err)
+            return err
+        }
+        //gpsData = result
+        res.json(getbearing(result))
+    })
+
+})
+
+
 
 const initFolder = './'
 

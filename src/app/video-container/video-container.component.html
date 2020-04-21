@@ -6,7 +6,7 @@
   
 
 <div class="parzoomparent">
-  <div class = "videoframe " height="288" width="512"> 
+  <div class = "videoframe " height="288" width="512"  > 
     <video controls #player  height="288" width="512"
     controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)"  (play) ="onplay()" (pause) ="onpause()">
       <source src="{{video_url}}" type="video/mp4">
@@ -16,7 +16,7 @@
   </video>  
 </div> 
 
-  <div #watermark id="watermark">
+  <div #watermark id="watermark" *ngIf = 1>
     <img src="assets/loading.gif" width="20px" height="20px">
   </div>
 

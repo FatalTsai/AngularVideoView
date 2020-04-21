@@ -28,7 +28,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
   server_url ='http://localhost:1386/api/video/'
-  video_url='http://localhost:1386/api/video/F_8778fuck__8877pussy_dvr17.MP4'
+  video_url='assets/1 Second Video.mp4'
   constructor(private sanitizer: DomSanitizer,
     private svc: CommonSvc,
     private route : ActivatedRoute,

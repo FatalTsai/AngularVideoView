@@ -6,7 +6,7 @@ export class CommonSvc{
 
     public mySub = new Subject<any>();
     public counter: number = 0;
-    public playingvideo :string
+    public playingvideo :string =''
   increaseCounter(){
     this.counter++;
     this.mySub.next(this.counter);

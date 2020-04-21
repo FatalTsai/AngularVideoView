@@ -4,6 +4,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, Input, SimpleChanges } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { CommonSvc } from '../common.svc';
 declare var google: any; //https://stackoverflow.com/questions/51677452/angular-6-application-cannot-find-namespace-google
 //solve : error TS2304: Cannot find name 'google'
 
@@ -16,11 +17,20 @@ export class MapComponent implements OnInit {
 
   @Input() playstatModified : boolean =true;
   @Input() playstat : object
-
+  server_url :string =''
 
   @ViewChild("mapRef",{static : true}) mapRef: ElementRef;
   constructor( @Inject(DOCUMENT) private document,
-    private elementRef: ElementRef ,private http :HttpClient) {
+    private elementRef: ElementRef ,
+    private http :HttpClient, private svc: CommonSvc,
+    ) {
+      this.svc.mySub.subscribe(
+        (val) =>{
+          console.log('from map : '+val)
+          this.server_url = val
+          this.setup()
+        })
+  
   };
 
   ngAfterViewInit() {
@@ -131,7 +141,7 @@ moveMarker(value,originPos,deltaLat,deltaLng){
 
 
   setup(){
-    this.http.get<any>('/api/location', { observe: 'response' }).subscribe(res => {
+    this.http.get<any>('/api/location/'+this.server_url, { observe: 'response' }).subscribe(res => {
       let response: HttpResponse<any> = res;
       let status: number = res.status;
       let statusText: string = res.statusText;
@@ -170,7 +180,7 @@ moveMarker(value,originPos,deltaLat,deltaLng){
 
   });
 
-  this.http.get<any>('/api/bearing', { observe: 'response' }).subscribe(res => {
+  this.http.get<any>('/api/bearing/'+this.server_url, { observe: 'response' }).subscribe(res => {
     this.bearing = res.body
   });
 
