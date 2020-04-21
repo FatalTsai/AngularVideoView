@@ -9,7 +9,7 @@
   <div class = "videoframe " height="288" width="512"> 
     <video controls #player  height="288" width="512"
     controls="true" autoplay="true"   (timeupdate)="onTimeUpdate($event)"  (play) ="onplay()" (pause) ="onpause()">
-      <source src="http://localhost:1386/api/video/dvr17.mp4" type="video/mp4">
+      <source src="{{video_url}}" type="video/mp4">
       <source src="assets/Native.mp4" type="video/mp4">  
       <source src="star.mp4" type="video/mp4">   
       Your browser does not support the video tag.

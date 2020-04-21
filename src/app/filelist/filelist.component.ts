@@ -116,7 +116,7 @@ export class FilelistComponent implements OnInit {
   selectvideo(val)
   {
     console.log(val.name)
-    this.svc.videoselct(val.name)
+    this.svc.videoselct(this.filename_parse(val.name))
   }
 
 }

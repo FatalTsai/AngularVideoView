@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, SimpleChange, SimpleChanges ,EventEmitter, AfterViewInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tick } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import panzoom from "panzoom";
@@ -27,11 +27,19 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
-
-  constructor(private sanitizer: DomSanitizer,private svc: CommonSvc) {
+  server_url ='http://localhost:1386/api/video/'
+  video_url='http://localhost:1386/api/video/F_8778fuck__8877pussy_dvr17.MP4'
+  constructor(private sanitizer: DomSanitizer,
+    private svc: CommonSvc,
+    private route : ActivatedRoute,
+    private router : Router) {
     this.svc.mySub.subscribe(
       (val) =>{
+        this.video_url = this.server_url +val
         console.log(val)
+        this.player.nativeElement.load()
+        //this.router.navigate(['filelist'],{relativeTo:this.route})
+
       }
     )
 

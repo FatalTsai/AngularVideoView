@@ -14,7 +14,7 @@ export class CommonSvc{
   videoselct(name){
     this.playingvideo = name
     this.mySub.next(this.playingvideo)
-    console.log(this.playingvideo)
+    //console.log(this.playingvideo)
   }
 
 }
