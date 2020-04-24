@@ -21,6 +21,7 @@ import { AngularSplitModule } from 'angular-split';
 import { ChatService } from 'src/chat.service';
 import { SocketryComponent } from './socketry/socketry.component';
 import { CommonSvc } from './common.svc';
+import { TitlebarComponent } from './titlebar/titlebar.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CommonSvc } from './common.svc';
     MapComponent,
     FileuploadComponent,
     FilelistComponent,
-    SocketryComponent
+    SocketryComponent,
+    TitlebarComponent
     
     
   ],

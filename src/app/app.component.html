@@ -533,22 +533,29 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <div class="container">
-    <div class="left"  *ngIf="router.url === '/' ">
-      <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
-      <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
-      (playstatUpadte)="playstatUpadte($event)" 
-      *ngIf="router.url === '/' " ></app-video-control>
+    <div class="top">
+      <app-titlebar  *ngIf="router.url === '/' "></app-titlebar>
+
+
     </div>
+    <div class="bottom">
+      <div class="left"  *ngIf="router.url === '/' ">
+        <app-video-container [playstatModified]="playstatModified" [playstat]="playstat"   (change)="update($event)"  *ngIf="router.url === '/' "></app-video-container>
+        <app-video-control [playstatModified]="playstatModified"   [playstat]="playstat"   (change)="update($event)"  
+        (playstatUpadte)="playstatUpadte($event)" 
+        *ngIf="router.url === '/' " ></app-video-control>
+      </div>
 
 
-    <div class="right"   *ngIf="router.url === '/' "  >
-      <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
-      ></app-map>
+      <div class="right"   *ngIf="router.url === '/' "  >
+        <app-map [playstatModified]="playstatModified" [playstat]="playstat" *ngIf="router.url === '/' " 
+        ></app-map>
 
-      <app-filelist  *ngIf="router.url === '/' ">
+        <app-filelist  *ngIf="router.url === '/' ">
 
-      </app-filelist>
+        </app-filelist>
 
+      </div>
     </div>
 <!--
 https://bertrandg.github.io/angular-split/#/

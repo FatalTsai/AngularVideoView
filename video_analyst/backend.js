@@ -56,6 +56,7 @@ function getMimeNameFromExt(ext) {
     
     return result;
 }
+/*
 async function analyser(){
     var tmp = 'fuck'
     tmp =  await videoanalyser.default.analyseVideo(dvr17, async function(err,result){          
@@ -73,7 +74,7 @@ async function analyser(){
         //return tmp 
         return 'fuck'
     }, 2000);
-}
+}*/
 
 function getlocation(data) // only reserve lat and lng
 {
@@ -589,4 +590,4 @@ ffmpeg('F:\dvr19.MP4')
   
 
 
-shots('F:\dvr17.MP4')
+//shots('F:\dvr17.MP4')

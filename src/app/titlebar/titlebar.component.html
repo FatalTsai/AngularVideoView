@@ -1,0 +1,48 @@
+<div class="titlebar">
+    <img src="assets/titlebar/app-icon-square-512.png" class="titlebar-icon">
+
+    <div class="titlebar-title">
+           
+         JET-OPTO Viewer 
+          
+    </div>
+
+    <div ng-if="platform == 'win32'" class="titlebar-stoplight">
+
+        <button type="button" class="windows-minimize" (click)="minimise()" >
+            <mat-icon class="title-toolbar" svgIcon="minimize"></mat-icon>
+
+        </button>
+
+        <button type="button" class="windows-toggle-fullscreen" (click)="maximise()">
+
+            <mat-icon class="title-toolbar" svgIcon="fullscreen"></mat-icon>
+
+        </button>
+
+        <button type="button" class="windows-close" (click)="close()">
+            <mat-icon class="title-toolbar"svgIcon="close"></mat-icon>
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<div class="header">
+    <button mat-button >
+        <mat-icon svgIcon="folder_add"></mat-icon>
+        <span  class="buttontext">Add Video</span>
+    </button>
+    <button mat-button >
+        <mat-icon svgIcon="camera"></mat-icon>
+        <span  class="buttontext">Snapshot</span>
+    </button>
+    <button mat-button id="setting">
+        <mat-icon svgIcon="setting"></mat-icon>
+        <span  class="buttontext">settings</span>
+    </button>
+
+</div>
+
