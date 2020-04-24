@@ -23,6 +23,12 @@ import { SocketryComponent } from './socketry/socketry.component';
 import { CommonSvc } from './common.svc';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 
+//using in titlebar
+import {MatDialogModule} from '@angular/material/dialog';
+import { FileNameDialogComponent } from './titlebar/settingdialog/settingdialog.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +39,9 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
     FileuploadComponent,
     FilelistComponent,
     SocketryComponent,
-    TitlebarComponent
+    TitlebarComponent,
+    FileNameDialogComponent
+    
     
     
   ],
@@ -51,9 +59,15 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
     MatListModule,
     AngularResizedEventModule,
     AngularSplitModule.forRoot(),
+    MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule
      
   ],
   providers: [ChatService,CommonSvc],
+  entryComponents:[FileNameDialogComponent], //https://majing.io/posts/10000004551171 
+  //In the case of a dynamically loaded component and in order for a ComponentFactory to be generated, the component must also be added to the module’s entryComponents:
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -39,10 +39,20 @@
         <mat-icon svgIcon="camera"></mat-icon>
         <span  class="buttontext">Snapshot</span>
     </button>
-    <button mat-button id="setting">
+    <button mat-button id="setting" (click)=" openAddFileDialog()">
         <mat-icon svgIcon="setting"></mat-icon>
         <span  class="buttontext">settings</span>
     </button>
 
 </div>
 
+  <div class="basic-container" *ngIf="0">
+    <h2>File Tree</h2>
+    <ul>
+      <li *ngFor="let file of files">
+        {{file.name}}
+      </li>
+      <button (click)="openAddFileDialog()">Add file</button>
+    </ul>
+  </div>
+  

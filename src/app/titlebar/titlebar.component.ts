@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialogRef,VERSION, MatDialog} from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FileNameDialogComponent } from './settingdialog/settingdialog.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-titlebar',
@@ -8,10 +10,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./titlebar.component.css']
 })
 export class TitlebarComponent implements OnInit {
+  version = VERSION;
+  fileNameDialogRef: MatDialogRef <FileNameDialogComponent>;
+
 
   constructor(
     iconRegistry: MatIconRegistry, 
-    sanitizer: DomSanitizer)
+    sanitizer: DomSanitizer,
+    private dialog: MatDialog)
     {
       iconRegistry.addSvgIcon(
         'folder_add',
@@ -36,7 +42,32 @@ export class TitlebarComponent implements OnInit {
         sanitizer.bypassSecurityTrustResourceUrl('assets/titlebar/close.svg'));
   }  
 
+
+
+  files = [
+    { name: 'foo.js', content: ''},
+    { name: 'bar.js', content: ''}
+  ];
+
+  dialogstyle={
+    padding:"0px",
+    background:"black",
+    width: "700px",
+    height: "600px",
+  }
+  openAddFileDialog() {
+    this.fileNameDialogRef = this.dialog.open(FileNameDialogComponent,this.dialogstyle);
+
+    this.fileNameDialogRef.afterClosed().pipe(
+      filter(name => name)
+    ).subscribe(name => {
+      this.files.push({ name, content: ''});
+    })
+  }
   ngOnInit() {
   }
 
 }
+
+
+
