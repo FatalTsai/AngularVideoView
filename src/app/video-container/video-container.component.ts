@@ -102,7 +102,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.player.nativeElement.style = this.filter
     this.player.nativeElement.controls = false //none display control buttons
-    
+   // console.log('player = '+JSON.stringify(this.player))
 
   }
 

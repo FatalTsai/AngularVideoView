@@ -29,20 +29,31 @@
 
 </div>
 
-
+<!-- download attriute : https://codepen.io/fatal_tsai/pen/VwvzZwX?editors=1010-->
 <div class="header">
     <button mat-button >
         <mat-icon svgIcon="folder_add"></mat-icon>
         <span  class="buttontext">Add Video</span>
     </button>
-    <button mat-button >
-        <mat-icon svgIcon="camera"></mat-icon>
-        <span  class="buttontext">Snapshot</span>
-    </button>
+
+
+        <button mat-button (click)="snapshot()" >
+            <!-- <a #download_link download="my_exported_file.txt"  href="http://localhost:1386/api/location" </a> >-->
+
+            <mat-icon svgIcon="camera"></mat-icon>
+            <span  class="buttontext">Snapshot</span>
+            
+        </button>
+
+    <input type="button" id="dwn-btn" value="Download dinamically generated text file" (click)="downloadpic('fuck.txt','nmsl')"/>
+
     <button mat-button id="setting" (click)=" openAddFileDialog()">
         <mat-icon svgIcon="setting"></mat-icon>
         <span  class="buttontext">settings</span>
     </button>
+
+    <img #img class="profileicon icon1" src="assets/1386.png" *ngIf="0">
+
 
 </div>
 
@@ -54,5 +65,44 @@
       </li>
       <button (click)="openAddFileDialog()">Add file</button>
     </ul>
-  </div>
+</div>
   
+
+
+
+<div class="btn btn-primary" (click)="downloadImage()">DL</div>
+<table #screen id="table" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="download">
+  <img #canvas>
+  <a #downloadLink></a>
+</div>
