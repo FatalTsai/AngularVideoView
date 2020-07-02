@@ -348,10 +348,12 @@ function execShellCommand(cmd) {
     });
     }
 
+var getmediainfo = require('./mediainformation_try.js')
 
-  (async function () {  
-
+(async function () {  
+    console.log( getmediainfo.getmediainfo(dvr17))
 })();
+
 
 
 app.get('/api/usb', (req, res) => {
@@ -363,7 +365,8 @@ app.get('/api/usb', (req, res) => {
 
         var timeinfo =[]
         for(var i=0;i<filename.length;i++){
-            timeinfo.push(await getmediatime(filename[i]))
+            console.log(await getmediainfo(filename[i]))
+            timeinfo.push(await getmediainfo(filename[i]).Encoded_Date)
             shots(filename[i])
         }
         res.send([filename, timeinfo])
@@ -395,7 +398,18 @@ async function inusedisk(plugin){
 
     return await result
 }
-async function getmediatime(path)
+
+var { getVideoDurationInSeconds } = require('get-video-duration')
+getVideoDurationInSeconds(dvr17).then((duration) => {
+    console.log(duration)
+  })
+  
+
+
+
+
+
+async function getmediatime(path) 
 {
     
     var dateinfo= await mediainfo(path)
@@ -406,7 +420,7 @@ async function getmediatime(path)
 
     return String(result)
 }
-async function getmediaduration(path)
+async function getmediaduration(path)// need fix
 {
     
     var dateinfo= await mediainfo(path)

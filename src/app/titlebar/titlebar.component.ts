@@ -3,7 +3,7 @@ import { MatIconRegistry, MatDialogRef,VERSION, MatDialog} from '@angular/materi
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileNameDialogComponent } from './settingdialog/settingdialog.component';
 import { filter } from 'rxjs/operators';
-import * as html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: 'app-titlebar',
@@ -138,11 +138,15 @@ downloadpic(filename, text) {
   }
 
   @ViewChild('screen',{static:true}) screen: ElementRef;
+  @ViewChild('screen2',{static:true}) screen2: ElementRef;
+
   @ViewChild('canvas',{static:true}) canvas: ElementRef;
   @ViewChild('downloadLink',{static:true}) downloadLink: ElementRef;
 
   downloadImage(){
-    html2canvas(this.screen.nativeElement).then(canvas => {
+    console.log(this.screen2.nativeElement)
+    console.log(typeof(this.screen2.nativeElement))
+    html2canvas(this.screen2.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
       this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
       this.downloadLink.nativeElement.download = 'marble-diagram.png';
