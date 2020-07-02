@@ -56,7 +56,7 @@
     "get-video-duration": "^3.0.0",
     "hammerjs": "^2.0.8",
     "html2canvas": "^1.0.0-rc.5",
-    "jquery": "^1.9.1",
+    "jquery": "^3.5.0",
     "json-mediainfo": "^0.1.0",
     "mediainfo.js": "^0.1.2",
     "moment": "^2.24.0",
