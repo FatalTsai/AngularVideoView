@@ -50,7 +50,7 @@
     "child_process": "^1.0.2",
     "connect-multiparty": "^2.2.0",
     "drivelist": "^4.0.0",
-    "electron": "^8.1.1",
+    "electron": "^8.2.4",
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
     "get-video-duration": "^3.0.0",
