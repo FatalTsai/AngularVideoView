@@ -4,6 +4,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileNameDialogComponent } from './settingdialog/settingdialog.component';
 import { filter } from 'rxjs/operators';
 import html2canvas from "html2canvas";
+import { ChatService } from 'src/chat.service';
+import { CommonSvc } from '../common.svc';
+
 
 @Component({
   selector: 'app-titlebar',
@@ -23,7 +26,10 @@ export class TitlebarComponent implements OnInit {
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
-    private dialog: MatDialog)
+    private dialog: MatDialog,
+    private chatService :ChatService,
+    private svc :CommonSvc
+    )
     {
       iconRegistry.addSvgIcon(
         'folder_add',
@@ -46,6 +52,9 @@ export class TitlebarComponent implements OnInit {
       iconRegistry.addSvgIcon(
         'close',
         sanitizer.bypassSecurityTrustResourceUrl('assets/titlebar/close.svg'));
+
+
+
   }  
 
 
@@ -133,8 +142,9 @@ downloadpic(filename, text) {
   //https://stackblitz.com/edit/angular-html2canvas?file=src%2Fapp%2Fapp.component.ts
   //https://stackblitz.com/edit/canvas2img?file=app%2Fapp.component.ts
   snapshot(){
-    console.log( JSON.stringify(this.convertImageToCanvas(this.img) ))
-
+    //console.log( JSON.stringify(this.convertImageToCanvas(this.img) ))
+    console.log('from titlebar snapshot')
+    this.svc.imgSub.next('fuck from titlebar')
   }
 
   @ViewChild('screen',{static:true}) screen: ElementRef;
@@ -142,20 +152,27 @@ downloadpic(filename, text) {
 
   @ViewChild('canvas',{static:true}) canvas: ElementRef;
   @ViewChild('downloadLink',{static:true}) downloadLink: ElementRef;
-
+  stringhtml :ElementRef
   downloadImage(){
-    console.log(this.screen2.nativeElement)
+
+
+
+
     console.log(typeof(this.screen2.nativeElement))
-    html2canvas(this.screen2.nativeElement).then(canvas => {
+    html2canvas(this.screen.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
       this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
       this.downloadLink.nativeElement.download = 'marble-diagram.png';
       this.downloadLink.nativeElement.click();
       console.log(this.downloadLink.nativeElement)
+      
     });
   }
 
 
+
+
+ 
 }
 
 

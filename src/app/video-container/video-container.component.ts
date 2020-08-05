@@ -4,6 +4,7 @@ import { tick } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import panzoom from "panzoom";
 import { CommonSvc } from '../common.svc';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-video-container',
@@ -21,6 +22,8 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   @ViewChild('player',{static : true}) player : ElementRef //document.getElementById("player") 
   @ViewChild('watermark',{static :true})watermark :ElementRef
   @ViewChild('videoframe',{static :true})videoframe :ElementRef
+  @ViewChild('downloadLink',{static:true}) downloadLink: ElementRef;
+  //@ViewChild('canvas',{static:true}) canvas: ElementRef;
 
   //https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript
   //https://stackoverflow.com/questions/56704164/angular-viewchild-error-expected-2-arguments-but-got-1
@@ -28,7 +31,11 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
   filter = 'brightness(100%)   saturate(100%) contrast(100%)'
 
   server_url ='http://localhost:1386/api/video/'
-  video_url='assets/1 Second Video.mp4'
+  //video_url='assets/1 Second Video.mp4'
+  video_url ='dvr17.MP4'
+  snapshotName : String
+  userImageType: String
+  imageTypes   : String
   constructor(private sanitizer: DomSanitizer,
     private svc: CommonSvc,
     private route : ActivatedRoute,
@@ -36,12 +43,69 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
     this.svc.mySub.subscribe(
       (val) =>{
         this.video_url = this.server_url +val
-        console.log(val)
+        console.log('video_url = '+val)
         this.player.nativeElement.load()
         //this.router.navigate(['filelist'],{relativeTo:this.route})
 
       }
     )
+
+    this.svc.imgSub.subscribe(
+      (val) =>{
+        console.log('from imgsub: '+val)
+
+        /*
+        html2canvas(this.player.nativeElement).then(canvas => {
+          //this.canvas.nativeElement.src = canvas.toDataURL();
+          this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+          this.downloadLink.nativeElement.download = 'marble-diagram.png';
+          this.downloadLink.nativeElement.click();
+          console.log(this.downloadLink.nativeElement)
+          
+        });*/
+        
+        const canvasElement = <HTMLCanvasElement> document.createElement('CANVAS');
+        const video = this.player.nativeElement;
+        const context = canvasElement.getContext('2d');
+        let w: number, h: number, ratio: number;
+        ratio = video.videoWidth / video.videoHeight;
+        w = video.videoWidth - 100;
+        h = w / ratio;
+        canvasElement.width = w;
+        canvasElement.height = h;
+        context.fillRect(0, 0, w, h);
+        context.drawImage(video, 0, 0, w, h);
+        
+        console.log('from imgsub: '+context)
+        /*
+        try{
+        console.log(''+canvasElement.toDataURL())
+        }
+        catch(e)
+        {
+          console.log(e)
+        }*/
+        try{
+        const link = document.createElement('a');
+        //this.snapshotName = this.snapshotName !== '' ?  this.snapshotName : 'snapshot';
+        //this.userImageType = this.imageTypes.indexOf(this.userImageType.toUpperCase()) >= 0 ? this.userImageType.toUpperCase() : 'PNG';
+        //link.setAttribute('download', this.snapshotName + '.' + this.userImageType);
+        link.setAttribute('download', 'fuck.png');
+
+        const dataURL = canvasElement.toDataURL();
+        link.href = dataURL;
+        console.log('from : '+JSON.stringify(link))
+        document.body.appendChild(link);
+        link.click();
+        }catch(e){
+          console.log(e)
+        }
+        /*
+        
+        */
+      }
+    )
+
 
 
   }
@@ -52,7 +116,7 @@ export class VideoContainerComponent implements OnInit,AfterViewInit {
 
   public onTimeUpdate(value){
     //console.log(this.player.nativeElement.duration)
-    console.log(value.target.currentTime);
+    //console.log(value.target.currentTime);
     //console.log("ispaused = "+this.player.nativeElement.paused		)
     //console.log("isfullscreen? = "+ (this.player.nativeElement.webkitFullscreenElement ))
     this.playstat["currentTime"] = value.target.currentTime

@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 export class CommonSvc{
 
     public mySub = new Subject<any>();
+    public imgSub = new Subject<any>()
     public counter: number = 0;
     public playingvideo :string =''
   increaseCounter(){

@@ -17,7 +17,7 @@ export class SocketryComponent implements OnInit {
 
   constructor(private chatService :ChatService) 
   { 
-    this.secretCode = 'fuck';
+    this.secretCode = 'socketry';
   }
   sendMessage() {
       this.chatService.sendMessage(this.message);

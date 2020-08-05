@@ -255,7 +255,7 @@ app.get('/api/video/*',(req,res) =>{
     const rangeRequest = readRangeHeader(req.headers['range'], stats.size) 
     //console.log(rangeRequest)
     var resHeaders={};
-   
+    resHeaders['Access-Control-Allow-Origin']='*'
 
     console.log("filename = "+filename)
 
@@ -348,13 +348,13 @@ function execShellCommand(cmd) {
     });
     }
 
-var getmediainfo = require('./mediainformation_try.js')
-
+//var getmediainfo = require('./mediainformation_try.js')
+/*
 (async function () {  
     console.log( getmediainfo.getmediainfo(dvr17))
 })();
 
-
+*/
 
 app.get('/api/usb', (req, res) => {
     //res.send('fuck')
